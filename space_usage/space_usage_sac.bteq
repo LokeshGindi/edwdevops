@@ -1,0 +1,9 @@
+
+    .logon tddr/warehouse1,Dadcdad265;
+    .set width 10000
+    .os rm -f /var/groupon/tmp/space_usage_sac.report
+    .export report file=/var/groupon/tmp/space_usage_sac.report
+    .set separator ','
+    .run file /var/groupon/tmp/space_usage_sac.sql
+    .export reset
+    .exit

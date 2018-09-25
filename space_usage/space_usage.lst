@@ -1,0 +1,28 @@
+fs,cerebro-job-submitter1.snc1,
+fs,pit-prod-dropbox1.snc1,
+fs,pit-prod-etlhive1.snc1,
+fs,pit-prod-etljob1.snc1,
+fs,pit-prod-megatron-master1.snc1,
+fs,pit-prod-megatron-master2.snc1,
+fs,pit-prod-megatron-slave1.snc1,
+fs,pit-prod-megatron-slave2.snc1,
+fs,gdoop-megatron-slave1.snc1,
+fs,pit-prod-owagent1.snc1,
+fs,pit-prod-owagent3.snc1,
+fs,pit-prod-owagent4.snc1,
+fs,pit-prod-owagent5.snc1,
+fs,pit-prod-owagent6.snc1,
+fs,pit-prod-owmaster1.snc1,
+fs,pit-prod-owmaster2.snc1,
+fs,gdoop-owagent1.snc1,
+fs,gdoop-owagent2.snc1,
+fs,gdoop-owagent3.snc1,
+fs,gdoop-job-submitter1-sox.snc1,-i /home/etl_adhoc/.ssh/gdoop_sox_snc1 svc_sox@
+fs,gdoop-job-submitter2-sox.snc1,-i /home/etl_adhoc/.ssh/gdoop_sox_snc1 svc_sox@
+quota,webhdfs://gdoop-namenode-vip.snc1/user/grp_gdoop_edw_etl_prod,ssh svc_edw_prod@gdoop-owagent2.snc1
+quota,webhdfs://gdoop-namenode-vip.snc1/user/grp_gdoop_edw_meg_prod,
+quota,webhdfs://gdoop-namenode-vip.snc1/user/grp_gdoop_edw_rep_prod,
+quota,webhdfs://cerebro-namenode-vip.snc1/user/grp_edw_etl_prod,ssh svc_edw_prod@gdoop-owagent2.snc1
+quota,webhdfs://cerebro-namenode-vip.snc1/user/grp_edw_rep_prod,
+quota,webhdfs://cerebro-namenode-vip.snc1/user/grp_gdoop_edw_etl_prod,
+quota,webhdfs://gdoop-sox-namenode/user/grp_gdoop_sox,ssh -i /home/etl_adhoc/.ssh/gdoop_sox_snc1 svc_sox@gdoop-job-submitter1-sox.snc1

@@ -1,0 +1,18 @@
+SUCCESS,2017-08-15 02:22:47,Teradata/billings/Orders
+SUCCESS,2017-08-15 03:30:36,Hive/dim_deal_unity/Deal Catalog
+SUCCESS,2017-08-15 03:32:17,Hive/deal_inv_product/Voucher Inventory
+SUCCESS,2017-08-15 03:30:36,Hive/deal_merch_product/Deal Catalog
+SUCCESS,2017-08-15 03:30:36,Hive/deal_window_map/Deal Catalog
+SUCCESS,2017-08-15 03:30:36,Hive/deal_country_map/Deal Catalog
+SUCCESS,2017-08-15 01:30:42,Hive/deals_core/Deal Catalog
+SUCCESS,2017-08-15 01:30:42,Teradata/deals_core/Deal Catalog
+SUCCESS,2017-08-15 04:15:24,snc1_teradata/parent_orders/groupon_orders
+SUCCESS,2017-08-15 04:15:22,snc1_teradata/orders/groupon_orders
+SUCCESS,2017-08-15 04:15:25,snc1_teradata/order_item_units/groupon_orders
+SUCCESS,2017-08-15 04:15:21,snc1_teradata/order_item_adjustments/groupon_orders
+SUCCESS,2017-08-15 03:29:43,snc1_teradata/order_payment_transactions/groupon_orders
+SUCCESS,2017-08-15 03:55:28,snc1_teradata/orders/groupon_orders_snc1
+SUCCESS,2017-08-15 03:55:28,snc1_teradata/order_payment_transactions/groupon_orders_snc1
+SUCCESS,2017-08-15 03:55:21,snc1_teradata/order_item_adjustments/groupon_orders_snc1
+SUCCESS,2017-08-15 03:55:28,snc1_teradata/parent_orders/groupon_orders_snc1
+SUCCESS,2017-08-15 03:55:28,snc1_teradata/order_item_units/groupon_orders_snc1

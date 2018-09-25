@@ -1,0 +1,5 @@
+SUCCESS,2016-09-08 03:36:33,dwh_base/deal_template_option/std_data
+SUCCESS,2016-09-08 04:15:51,dwh_base/deal_template/std_data
+SUCCESS,2016-09-08 01:24:58,dwh_base/city_deals_ext/std_data
+FAILED,2016-09-07 22:45:52,edwprod/deal_unity_map/Deals
+SUCCESS,2016-09-08 04:23:09,dwh_base/deal_run_option/std_data

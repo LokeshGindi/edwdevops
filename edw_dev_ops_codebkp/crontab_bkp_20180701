@@ -1,0 +1,66 @@
+MANPATH=/opt/teradata/client/Current/odbc_32/help/man:
+HOSTNAME=pit-prod-owagent3
+LD_LIBRARY_PATH=/usr/local/lib/unixodbc:/opt/teradata/client/Current/tbuild/lib:/usr/local/lib/teradata/client/Current/odbc_64/lib:/usr/local/lib/teradata/client/Current/odbc_32/lib:/usr/local/lib:/usr/local/lib:/usr/lib
+ZOMBIERC=/home/etl_adhoc/.zrc2
+PATH=/usr/local/bin/unixodbc:/opt/teradata/client/Current/tbuild/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/opt/teradata/client/Current/datamover/commandline:/home/etl_adhoc/bin
+
+# [EDW Tools Team cron entries]
+
+*/5 * * * * /usr/local/bin/python /var/groupon/edw_tools/distcp_daemon.py > /var/groupon/edw_tools/logs/distcp_daemon.log  2>&1
+*/5 * * * * /usr/local/bin/python /var/groupon/edw_tools/filecopy_daemon.py > /var/groupon/edw_tools/logs/filecopy_daemon.log  2>&1
+*/5 * * * * /usr/local/bin/python /var/groupon/edw_tools/fsbrowser_daemon.py > /var/groupon/edw_tools/logs/fsbrowser_daemon.log  2>&1
+
+# EDW Dev ops team crons
+#OLD CRONS
+#20 * * * * . /home/etl_adhoc/.bash_profile; sh /home/ankarora/space_usage/space_usage.sh > /var/groupon/tmp/space_usage.log
+#*/15 * * * * . /home/etl_adhoc/.bash_profile; sh /home/ankarora/long_running/long_running.sh > /var/groupon/tmp/long_running.log
+#50 * * * * . /home/etl_adhoc/.bash_profile; sh /home/ankarora/long_running/archive_long_running.sh > /var/groupon/tmp/archive_long_running.log
+#20 18 * * * . /home/etl_adhoc/.bash_profile; sh /home/ankarora/hotfix/hotfix.sh edw-dev-ops@groupon.com,pit@groupon.com,edw-managers@groupon.com
+#*/30 * * * * . /home/etl_adhoc/.bash_profile; sh /home/ankarora/bh_mob_status_gdoop/bh_mob_status_gdoop.sh
+#*/15 0-12 * * * . /home/etl_adhoc/.bash_profile; sh /home/ankarora/table_limits_eod/table_limits_eod.sh > /var/groupon/tmp/table_limits_eod.log
+#10 0 * * * . /home/etl_adhoc/.bash_profile; sh /home/ankarora/tdpass/tdpass.sh
+#15 16 * * * . /home/etl_adhoc/.bash_profile; sh /home/ankarora/ops_stats/ops_stats.sh
+#30 9 * * * /home/etl_adhoc/ramsubramani/alert/bh_events_hive_td_count/email.sh > /home/etl_adhoc/ramsubramani/alert/bh_events_hive_td_count/log.txt 2>&1
+
+#NEW SET OF CRONS
+20 * * * * . /home/etl_adhoc/.bash_profile; sh /var/groupon/edwdevops/space_usage/space_usage.sh > /var/groupon/edwdevops/logs/space_usage.log
+*/15 * * * * . /home/etl_adhoc/.bash_profile; sh /var/groupon/edwdevops/long_running/long_running.sh > /var/groupon/edwdevops/logs/long_running.log
+50 * * * * . /home/etl_adhoc/.bash_profile; sh /var/groupon/edwdevops/long_running/archive_long_running.sh > /var/groupon/edwdevops/logs/archive_long_running.log
+20 18 * * * . /home/etl_adhoc/.bash_profile; sh /var/groupon/edwdevops/hotfix/hotfix.sh edw-dev-ops@groupon.com,pit@groupon.com,edw-managers@groupon.com
+*/30 * * * * . /home/etl_adhoc/.bash_profile; sh /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.sh
+*/15 0-12 * * * . /home/etl_adhoc/.bash_profile; sh /var/groupon/edwdevops/table_limits_eod/table_limits_eod.sh > /var/groupon/edwdevops/logs/table_limits_eod.log
+10 0 * * * . /home/etl_adhoc/.bash_profile; sh /var/groupon/edwdevops/tdpass/tdpass.sh
+15 16 * * * . /home/etl_adhoc/.bash_profile; sh /var/groupon/edwdevops/ops_stats/ops_stats.sh
+20 16 * * * . /home/etl_adhoc/.bash_profile; sh /var/groupon/edwdevops/ops_stats/ops_stats_sac.sh
+30 9 * * * /home/etl_adhoc/ramsubramani/alert/bh_events_hive_td_count/email.sh > /home/etl_adhoc/ramsubramani/alert/bh_events_hive_td_count/log.txt 2>&1
+
+*/1 * * * * sh /var/groupon/edwdevops/overall_pipeline/master.sh
+*/15 2-23 * * * sh /var/groupon/edwdevops/overall_pipeline/overall_pipeline.sh
+5 12,15,19 * * * sh /var/groupon/edwdevops/overall_pipeline/overall_pipeline.sh edw-dev-ops@groupon.com,edw-managers@groupon.com,pit@groupon.com
+
+30 19 * * * /home/etl_adhoc/hung_processes/long_running_kill.sh > /home/etl_adhoc/hung_processes/logs/lrk_`date +\%Y\%m\%d`.txt 2>&1
+30 16 * * 1 /home/etl_adhoc/hung_processes/most_failures.sh edw-dev-ops@groupon.com,edw-managers@groupon.com
+30 * * * * sh /home/etl_adhoc/edw_dev_ops/alerts/table_limits/main.sh
+
+
+#0 11-17 * * * zombie_runner run /home/etl_adhoc/alert_goods >/home/etl_adhoc/alert_goods/good_megatron_gls_manifest.log 2>&1
+
+# temp memory capture
+#*/5 * * * * /home/etl_adhoc/util/capture_mem_usage_by_pid.ksh >> /home/etl_adhoc/util/capture_mem_usage_by_pid.data
+#*/10 * * * * /home/etl_adhoc/util/mem_dump_hirarchy.sh >> /home/etl_adhoc/util/mem_dump.data
+
+#opswise reports - do not delete
+0 10-23/2 * * * /usr/local/bin/python /var/groupon/crons/reports/datascience/datascience.py 2>&1
+50 23 * * * /usr/local/bin/python /var/groupon/crons/reports/datascience/datascience_daily.py 2>&1
+0 10-21 * * * /usr/local/bin/python /var/groupon/crons/reports/relevance/relevance.py 2>&1
+#0,30 10-20 * * * /usr/local/bin/python /var/groupon/crons/reports/goods/goods_daily.py 2>&1
+30 13,14,15,16,17,18,19 * * * /usr/local/bin/python /var/groupon/crons/reports/finance/job_status_alert.py 2>&1
+0 10-23/2 * * * /usr/local/bin/python /var/groupon/crons/reports/sem/sem_jobs_status.py 2>&1
+
+##### Begin configurate-managed region #####
+##### DO NOT EDIT #####
+PATH=/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin
+##### End configurate-managed region #####
+
+#Runs every hour 12th minute, Making checkpoints frequently so that we hold less trash unlike 2 days - added by Kushal until Namenode restart
+12 * * * * /usr/local/bin/hadoop fs -expunge

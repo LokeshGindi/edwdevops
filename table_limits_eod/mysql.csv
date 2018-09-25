@@ -1,0 +1,64 @@
+SUCCESS,2018-07-16 06:45:44,Hive/deals_core/Deal Catalog
+SUCCESS,2018-07-16 08:30:58,Hive/deal_country_map/Deal Catalog
+SUCCESS,2018-07-16 08:46:39,Hive/deal_inv_product/Voucher Inventory
+SUCCESS,2018-07-16 07:30:59,Hive/deal_merch_product/Deal Catalog
+SUCCESS,2018-07-16 08:30:58,Hive/deal_window_map/Deal Catalog
+SUCCESS,2018-07-16 08:30:58,Hive/dim_deal_unity/Deal Catalog
+SUCCESS,2018-07-16 00:29:58,hive/fact_order_adj_NA/groupon_order_production
+SUCCESS,2018-07-16 00:29:58,hive/fact_order_transactions_NA/groupon_order_production
+SUCCESS,2018-07-16 00:29:58,hive/fact_voucher_details_NA/groupon_order_production
+SUCCESS,2018-07-16 08:06:05,snc1_hive/orders/groupon_orders_snc1
+SUCCESS,2018-07-16 08:06:05,snc1_hive/order_events/groupon_orders_snc1
+SUCCESS,2018-07-16 08:06:02,snc1_hive/order_item_adjustments/groupon_orders_snc1
+SUCCESS,2018-07-16 08:06:02,snc1_hive/order_item_adjustment_events/groupon_orders_snc1
+SUCCESS,2018-07-16 08:06:05,snc1_hive/order_item_units/groupon_orders_snc1
+SUCCESS,2018-07-16 06:18:04,snc1_hive/order_item_unit_events/groupon_orders_snc1
+SUCCESS,2018-07-16 06:03:24,snc1_hive/order_request_details/groupon_orders_snc1
+SUCCESS,2018-07-16 04:12:25,snc1_hive/order_request_details_raw/groupon_orders_snc1
+SUCCESS,2018-07-16 06:18:04,snc1_hive/parent_orders/groupon_orders_snc1
+SUCCESS,2018-07-16 07:53:24,snc1_hive/voucher_barcodes/groupon_orders_snc1
+SUCCESS,2018-07-16 07:05:38,snc1_teradata/campaigns/groupon
+SUCCESS,2018-07-16 07:17:51,snc1_teradata/campaign_details/groupon
+SUCCESS,2018-07-16 06:18:04,snc1_teradata/campaign_memberships/groupon_orders_snc1
+SUCCESS,2018-07-16 07:37:40,snc1_teradata/campaign_membership_coupons/groupon_orders_snc1
+SUCCESS,2018-07-16 06:29:59,snc1_teradata/campaign_membership_pledges/groupon_orders_snc1
+SUCCESS,2018-07-16 07:05:49,snc1_teradata/campaign_pledges/groupon
+SUCCESS,2018-07-16 06:14:23,snc1_teradata/channel_subscriptions/groupon_user
+SUCCESS,2018-07-16 07:57:32,snc1_teradata/collection_transactions/groupon_orders_snc1
+SUCCESS,2018-07-16 07:17:50,snc1_teradata/deal_localized_contents/groupon
+SUCCESS,2018-07-16 07:48:25,snc1_teradata/orders/groupon_orders
+SUCCESS,2018-07-16 08:19:47,snc1_teradata/orders/groupon_orders_snc1
+SUCCESS,2018-07-16 02:51:56,snc1_teradata/order_audit_records/groupon_orders_snc1
+SUCCESS,2018-07-16 07:33:56,snc1_teradata/order_discounts/groupon_orders_snc1
+SUCCESS,2018-07-16 06:30:13,snc1_teradata/order_discount_versions/groupon_orders_snc1
+SUCCESS,2018-07-16 07:48:24,snc1_teradata/order_item_adjustments/groupon_orders
+SUCCESS,2018-07-16 08:32:40,snc1_teradata/order_item_adjustments/groupon_orders_snc1
+SUCCESS,2018-07-16 08:50:59,snc1_teradata/order_item_units/groupon_orders
+SUCCESS,2018-07-16 08:33:07,snc1_teradata/order_item_units/groupon_orders_snc1
+SUCCESS,2018-07-16 08:50:59,snc1_teradata/order_payment_transactions/groupon_orders
+SUCCESS,2018-07-16 07:53:27,snc1_teradata/order_payment_transactions/groupon_orders_snc1
+SUCCESS,2018-07-16 08:06:05,snc1_teradata/order_request_details/groupon_orders_snc1
+SUCCESS,2018-07-16 06:29:57,snc1_teradata/order_shipping_cost_versions/groupon_orders_snc1
+SUCCESS,2018-07-16 07:48:25,snc1_teradata/parent_orders/groupon_orders
+SUCCESS,2018-07-16 08:19:47,snc1_teradata/parent_orders/groupon_orders_snc1
+SUCCESS,2018-07-16 06:54:45,snc1_teradata/subscriptions/groupon
+SUCCESS,2018-07-16 07:52:32,snc1_teradata/tax_documents/groupon_orders_snc1
+SUCCESS,2018-07-16 07:17:52,snc1_teradata/users/groupon
+SUCCESS,2018-07-16 07:17:42,snc1_teradata/user_profiles/groupon
+SUCCESS,2018-07-16 08:06:04,snc1_teradata/voucher_barcodes/groupon_orders_snc1
+SUCCESS,2018-07-16 02:49:01,snc1_teradata/voucher_txn_events/voucher_txn_db
+SUCCESS,2018-07-16 00:04:26,tdwc/order_attributes/snc1_orders_parsed
+SUCCESS,2018-07-16 05:08:26,Teradata/billings/Orders
+SUCCESS,2018-07-16 04:30:46,Teradata/deals_core/Deal Catalog
+SUCCESS,2018-07-16 07:00:48,Teradata/dim_deal_unity/Deal Catalog
+SUCCESS,2018-07-16 00:29:58,Teradata/fact_order_transactions_NA/groupon_order_production
+SUCCESS,2018-07-16 01:57:05,Teradata/glive_purchase/glive
+SUCCESS,2018-07-16 06:13:32,Teradata/subscriptions/GSS
+SUCCESS,2018-07-16 09:27:53,Teradata/tpis_reservation/tpis_service
+SUCCESS,2018-07-16 09:27:45,Teradata/tpis_unit/tpis_service
+SUCCESS,2018-07-16 07:16:00,snc1_gdoop_hive/parent_orders/meg_groupon_orders
+SUCCESS,2018-07-16 07:16:00,snc1_gdoop_hive/orders/meg_groupon_orders
+FAILED,2018-07-10 21:00:00,snc1_gdoop_sox_teradata/unit_price_summaries/meg_grp_prod
+FAILED,2018-07-10 21:00:00,snc1_gdoop_sox_teradata/campaign_membership_coupons/meg_grp_prod
+FAILED,2018-07-10 21:00:00,snc1_gdoop_sox_teradata/redemption_sources/meg_grp_prod
+FAILED,2018-07-10 18:00:00,snc1_gdoop_sox_teradata/redemptions/meg_grp_prod

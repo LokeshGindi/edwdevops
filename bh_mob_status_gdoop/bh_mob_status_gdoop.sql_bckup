@@ -1,0 +1,43 @@
+select CONCAT('mob_extract_parse',': ',ref.name), min(timestamp(ref.dt) + interval ref.hr hour - interval 1 second ) ts from
+(select name,dt,hr from (select current_date as dt union select CURRENT_DATE- interval 1 day as dt union select CURRENT_DATE- interval 2 day as dt
+union select CURRENT_DATE- interval 3 day as dt union select CURRENT_DATE- interval 4 day as dt union select CURRENT_DATE- interval 5 day as dt
+union select CURRENT_DATE- interval 6 day as dt union select CURRENT_DATE- interval 7 day as dt union select CURRENT_DATE- interval 8 day as dt) dt_tbl join (select hr from tmp_hrs) hr_tbl join (select distinct name from steno_event_extract_parse WHERE event_date >= CURRENT_DATE- interval 8 day) namelist) ref
+left outer join (select name, event_date, event_hour from steno_event_extract_parse WHERE event_date >= CURRENT_DATE- interval 8 day and status='SUCCEEDED') status on status.name=ref.name and status.event_date=ref.dt and status.event_hour=ref.hr
+where status.name is null group by ref.name
+union
+select CONCAT('mob_hive_load',': ',ref.name), min(timestamp(ref.dt) + interval ref.hr hour - interval 1 second) ts from
+(select name,dt,hr from (select current_date as dt union select CURRENT_DATE- interval 1 day as dt union select CURRENT_DATE- interval 2 day as dt
+union select CURRENT_DATE- interval 3 day as dt union select CURRENT_DATE- interval 4 day as dt union select CURRENT_DATE- interval 5 day as dt
+union select CURRENT_DATE- interval 6 day as dt union select CURRENT_DATE- interval 7 day as dt union select CURRENT_DATE- interval 8 day as dt) dt_tbl join (select hr from tmp_hrs) hr_tbl join (select distinct name from steno_event_load WHERE event_date >= CURRENT_DATE- interval 8 day) namelist) ref
+left outer join (select name, event_date, event_hour from steno_event_load WHERE event_date >= CURRENT_DATE- interval 8 day and status='SUCCEEDED') status on status.name=ref.name and status.event_date=ref.dt and status.event_hour=ref.hr
+where status.name is null group by ref.name
+union
+select CONCAT('bh_extract',': ',ref.name), min(timestamp(ref.dt) + interval ref.hr hour - interval 1 second) ts from
+(select name,dt,hr from (select current_date as dt union select CURRENT_DATE- interval 1 day as dt union select CURRENT_DATE- interval 2 day as dt
+union select CURRENT_DATE- interval 3 day as dt union select CURRENT_DATE- interval 4 day as dt union select CURRENT_DATE- interval 5 day as dt
+union select CURRENT_DATE- interval 6 day as dt union select CURRENT_DATE- interval 7 day as dt union select CURRENT_DATE- interval 8 day as dt) dt_tbl join (select hr from tmp_hrs) hr_tbl join (select distinct name from tracky_event_extract WHERE event_date >= CURRENT_DATE- interval 8 day) namelist) ref
+left outer join (select name, event_date, event_hour from tracky_event_extract WHERE event_date >= CURRENT_DATE- interval 8 day and status='SUCCEEDED') status on status.name=ref.name and status.event_date=ref.dt and status.event_hour=ref.hr
+where status.name is null group by ref.name
+union
+select CONCAT('bh_parse',': ',ref.name), min(timestamp(ref.dt) + interval ref.hr hour - interval 1 second) ts from
+(select name,dt,hr from (select current_date as dt union select CURRENT_DATE- interval 1 day as dt union select CURRENT_DATE- interval 2 day as dt
+union select CURRENT_DATE- interval 3 day as dt union select CURRENT_DATE- interval 4 day as dt union select CURRENT_DATE- interval 5 day as dt
+union select CURRENT_DATE- interval 6 day as dt union select CURRENT_DATE- interval 7 day as dt union select CURRENT_DATE- interval 8 day as dt) dt_tbl join (select hr from tmp_hrs) hr_tbl join (select distinct name from tracky_event_parser WHERE event_date >= CURRENT_DATE- interval 8 day) namelist) ref
+left outer join (select name, event_date, event_hour from tracky_event_parser WHERE event_date >= CURRENT_DATE- interval 8 day and status='SUCCEEDED') status on status.name=ref.name and status.event_date=ref.dt and status.event_hour=ref.hr
+where status.name is null group by ref.name
+union
+select CONCAT('bh_hive_load',': ',ref.name), min(timestamp(ref.dt) + interval ref.hr hour - interval 1 second) ts from
+(select name,dt,hr from (select current_date as dt union select CURRENT_DATE- interval 1 day as dt union select CURRENT_DATE- interval 2 day as dt
+union select CURRENT_DATE- interval 3 day as dt union select CURRENT_DATE- interval 4 day as dt union select CURRENT_DATE- interval 5 day as dt
+union select CURRENT_DATE- interval 6 day as dt union select CURRENT_DATE- interval 7 day as dt union select CURRENT_DATE- interval 8 day as dt) dt_tbl join (select hr from tmp_hrs) hr_tbl join (select distinct name from bloodhound_clickstream_funnel WHERE event_date >= CURRENT_DATE- interval 8 day) namelist) ref
+left outer join (select name, event_date, event_hour from bloodhound_clickstream_funnel WHERE event_date >= CURRENT_DATE- interval 8 day and status='SUCCEEDED') status on status.name=ref.name and status.event_date=ref.dt and status.event_hour=ref.hr
+where status.name is null group by ref.name
+union
+select CONCAT('bh_td_load',': ',ref.name), min(timestamp(ref.dt) + interval ref.hr hour - interval 1 second) ts from
+(select name,dt,hr from (select current_date as dt union select CURRENT_DATE- interval 1 day as dt union select CURRENT_DATE- interval 2 day as dt
+union select CURRENT_DATE- interval 3 day as dt union select CURRENT_DATE- interval 4 day as dt union select CURRENT_DATE- interval 5 day as dt
+union select CURRENT_DATE- interval 6 day as dt union select CURRENT_DATE- interval 7 day as dt union select CURRENT_DATE- interval 8 day as dt) dt_tbl join (select hr from tmp_hrs) hr_tbl join (select distinct name from bloodhound_clickstream_funnel_load WHERE event_date >= CURRENT_DATE- interval 8 day) namelist) ref
+left outer join (select name, event_date, event_hour from bloodhound_clickstream_funnel_load WHERE event_date >= CURRENT_DATE- interval 8 day and status='SUCCEEDED') status on status.name=ref.name and status.event_date=ref.dt and status.event_hour=ref.hr
+where status.name is null group by ref.name
+order by ts;
+

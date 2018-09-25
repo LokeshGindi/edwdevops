@@ -1,0 +1,41 @@
+#!/bin/bash
+
+mysql -hgds-snc1-prod-opswise-cntrl-rw-vip.snc1 -uopswise_ro -popswise_ro -Dopswise -N < /var/groupon/edwdevops/ops_stats/weekly_ff.sql|tr '\t' , > /var/groupon/edwdevops/ops_stats/weekly_ff.txt
+mysql -hgds-snc1-prod-opswise-cntrl-rw-vip.snc1 -uopswise_ro -popswise_ro -Dopswise -N < /var/groupon/edwdevops/ops_stats/weekly_failures.sql|tr '\t' , > /var/groupon/edwdevops/ops_stats/weekly_failures.txt
+mysql -hgds-snc1-prod-opswise-cntrl-rw-vip.snc1 -uopswise_ro -popswise_ro -Dopswise -N < /var/groupon/edwdevops/ops_stats/weekly_skip.sql|tr '\t' , > /var/groupon/edwdevops/ops_stats/weekly_skip.txt
+
+echo "<html><title>Opswise Stats</title><head><link rel="icon" href="favicon.png"></head><body>
+<h3>Tasks with >=5 failures in a week</h3>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style="font-size:11px">
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>Task Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>No. of failed instances</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>No. of failed attempts</b></th>
+</tr>" > /var/groupon/edwdevops/ops_stats/ops_stats.html
+
+cat /var/groupon/edwdevops/ops_stats/weekly_failures.txt|sed -e 's/$/<\/td><\/tr>/g' -e 's/^/<tr style="font-size:11px"><td align="center" style="white-space:nowrap;">/g' -e 's/,/<\/td><td align="center" style="white-space:nowrap;">/g' >> /var/groupon/edwdevops/ops_stats/ops_stats.html
+
+echo "</table>" >> /var/groupon/edwdevops/ops_stats/ops_stats.html
+
+echo "<h3>Tasks with >=5 Force-Finish in a week</h3>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style="font-size:11px">
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>Task Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>No. of FF</b></th>
+</tr>" >> /var/groupon/edwdevops/ops_stats/ops_stats.html
+
+cat /var/groupon/edwdevops/ops_stats/weekly_ff.txt|sed -e 's/$/<\/td><\/tr>/g' -e 's/^/<tr style="font-size:11px"><td align="center" style="white-space:nowrap;">/g' -e 's/,/<\/td><td align="center" style="white-space:nowrap;">/g' >> /var/groupon/edwdevops/ops_stats/ops_stats.html
+
+echo "</table></body></html>" >> /var/groupon/edwdevops/ops_stats/ops_stats.html
+
+echo "<h3>Top skipped tasks, for the week</h3>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style="font-size:11px">
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>Task Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>No. of Skips</b></th>
+</tr>" >> /var/groupon/edwdevops/ops_stats/ops_stats.html
+
+cat /var/groupon/edwdevops/ops_stats/weekly_skip.txt|sed -e 's/$/<\/td><\/tr>/g' -e 's/^/<tr style="font-size:11px"><td align="center" style="white-space:nowrap;">/g' -e 's/,/<\/td><td align="center" style="white-space:nowrap;">/g' >> /var/groupon/edwdevops/ops_stats/ops_stats.html
+
+echo "</table></body></html>" >> /var/groupon/edwdevops/ops_stats/ops_stats.html
+cp /var/groupon/edwdevops/ops_stats/ops_stats.html /var/groupon/edwdevops/edw-dev-ops/archive/ops_stats/ops_stats_$(date +%F_%T).html

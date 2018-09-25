@@ -1,0 +1,81 @@
+
+
+h1 {
+    margin: 0;
+    padding: 0;
+    color: Green;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px ;
+}
+
+.skillbox {
+    box-sizing: border-box;
+    width: 100% ;
+    margin: 20px 0 ;
+
+}
+
+.skillbox p {
+    color: Green ;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    padding: 0 ;
+    font-weight: bold;
+    letter-spacing: 1px ;
+
+
+}
+
+.skillbox p:nth-child(2) {
+    float:right;
+    position: relative;
+    top: -20px;
+}
+
+.skill {
+  background: #262626 ;
+  padding: 4px;
+  box-sizing: border-box;
+  border: 1px solid #0fffb7 ;
+  border-radius: 2px ;
+
+}
+
+.skill_level {
+    background: #0fffb7 ;
+    width: 100% ;
+    height: 10px ;
+}
+
+progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+   appearance: none;
+  color: #262626 ;
+  width: 100px;
+  height: 2opx;
+  
+}
+
+
+
+
+a:link {
+color: #0065b1;
+text-decoration: none;
+}
+a:visited {
+color: #8A2BE2;
+}
+
+a:hover {
+
+
+color: Green;
+cursor: hand ;
+text-decoration: underline;
+}
+
+
+

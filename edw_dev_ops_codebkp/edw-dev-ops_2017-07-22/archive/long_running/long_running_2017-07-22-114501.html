@@ -1,0 +1,39 @@
+<html><title>Long Running Jobs</title><head><link rel=icon href=favicon.png></head><body>
+<meta http-equiv=refresh content=900>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_l></p>
+<p style=display:inline> min back)
+<br>Long Running Opswise Job Count- <b>1</b>
+<br>Long Running Hadoop Job Count- <b>3</b></p>
+<script>
+var refresh_l = new Date('2017-07-22T11:30:05Z');
+var now_l = new Date();
+var diff_l = now_l - refresh_l;
+var diff_min_l = Math.round(diff_l / 60000);
+document.getElementById('min_l').innerHTML= diff_min_l;
+</script>
+
+<h2>Long Running Opswise Jobs</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style=font-size:10px>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Type</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Trigger Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Run Duration</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Avg Dur</b></th>
+</tr>
+<tr style="font-size:10px" bgcolor="#FFFFFF"><td align="left" style="white-space:nowrap;">CEREBRO_COPY_GBL_FACT_TRANSACTIONS_NA_2017-07-20</td><td align="left" style="white-space:nowrap;">UNIX</td><td align="left" style="white-space:nowrap;">Manually Launched</td><td align="left" style="white-space:nowrap;">14:40</td><td align="left" style="white-space:nowrap;">00:01</td></tr>
+</table>
+<h2>Long Running Hadoop Jobs (Run Duration > 30 min)</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style=font-size:10px>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job ID</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Name Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Host</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Queue</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Run Duration</b></th>
+</tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://cerebro-resourcemanager-vip.snc1:8088/cluster/app/application_1496259896100_449601>application_1496259896100_449601</a></td><td align="left" style="white-space:nowrap;">teradata-connector-1.4.2.jar</td><td align="left" style="white-space:nowrap;">Cerebro</td><td align="left" style="white-space:nowrap;">replicator</td><td align="left" style="white-space:nowrap;">1:18</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201612211838_4709673>job_201612211838_4709673</a></td><td align="left" style="white-space:nowrap;">insert_wc_imps_agg</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p0</td><td align="left" style="white-space:nowrap;">0:36</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201612211838_4709700>job_201612211838_4709700</a></td><td align="left" style="white-space:nowrap;">insert_billing_attributes_tmp_</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">default</td><td align="left" style="white-space:nowrap;">0:33</td></tr>
+</table></body></html>

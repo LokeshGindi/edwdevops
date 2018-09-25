@@ -1,0 +1,302 @@
+#!/bin/bash
+
+#FUNCTION TO PRINT THE LOG INFORMATION INTO THE LOG FILE
+
+function print_log_info {
+ case $1 in
+  1)    echo -e "$2\t$(date '+%e %b %Y %T')\t$3\t\t$4" | tee -a $EDW_EOD_TBL_LOG_FILE
+        ;;
+  2)    echo -e "\t\t\t\t\t\t\t\t\t\t\t\t\t$2" | tee -a $EDW_EOD_TBL_LOG_FILE
+        ;;
+  usage) echo -e ""
+        echo -e "Usage: sh table_limits_eod.sh <<params>>"
+        echo -e "Ex: sh table_limits_eod.sh"
+        echo -e ""
+        ;;
+ esac
+}
+
+#FUNCTION TO FETCH MYSQL DB DETAILS AND EXECUTE SQL.
+
+function run_mysql_file {
+#MYSQLDB_ID,sql_file
+EOD_MYSQLDB_ID=$1
+EOD_MYSQL_RUN_FILE=$2
+#REMOVE_TMP_FIL=$3
+
+
+TEMP_SQL_LOG=$EDW_VIEWPOINT_LOG/temp_mysql_eod_output.log
+>$TEMP_SQL_LOG
+
+MYSQL_DB_NAME=$(grep "\<${EOD_MYSQLDB_ID}_MYSQLDB_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_HOST_NAME=$(grep "\<${EOD_MYSQLDB_ID}_MYSQLDB_HOST_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_DB_USER=$(grep "\<${EOD_MYSQLDB_ID}_MYSQLDB_DB_USER\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_DBUSR_PASSWD=$(grep "\<${EOD_MYSQLDB_ID}_MYSQLDB_DBUSR_PASSWD\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+
+ if ! mysql -u$MYSQLDB_DB_USER -p$MYSQLDB_DBUSR_PASSWD -D $MYSQL_DB_NAME -h $MYSQLDB_HOST_NAME -N <$EOD_MYSQL_RUN_FILE > $TEMP_SQL_LOG 2>&1 ; then
+   print_log_info 1 ERROR EDW_EODTABL_STS "Not able to execute sql:[${EOD_MYSQL_RUN_FILE}] at  [${MYSQLDB_DB_USER}@${MYSQL_DB_NAME}]."
+   sed 's/^/                                              /' $TEMP_SQL_LOG | tee -a $EDW_EOD_TBL_LOG_FILE
+   exit 1
+ else
+   print_log_info 1 INFO EDW_EODTABL_STS "Successfully executed sql:[${EOD_MYSQL_RUN_FILE}] at  [${MYSQLDB_DB_USER}@${MYSQL_DB_NAME}]."
+ fi
+
+#if [[ ! -z $REMOVE_TMP_FIL ]] ; then
+#   rm -f $TEMP_SQL_LOG
+#fi
+
+}
+
+#PREPARE SQL INSERTS FOR VIEPOINT DB.
+
+function prepare_eod_inserts {
+
+RUN_DT=$(date "+%F %H:%M UTC")
+ETL_RUN_KEY=$(echo $RUN_DT |cut -d" " -f1|tr -d '-')
+ETL_RUN_DATE="CURDATE()"
+EDW_EOD_TBL_INS_SQL=$EDW_VIEWPOINT_LOG/ins_eod_tables.sql
+SUCCESS_REC=$1
+TBL_NAME=$2
+DELETE_FLAG=$3
+
+echo "SET auto_increment_increment=1 ;" >$EDW_EOD_TBL_INS_SQL
+
+if [[ ! -z $DELETE_FLAG ]] ; then
+   echo "DELETE FROM $TBL_NAME ;" >>$EDW_EOD_TBL_INS_SQL
+fi
+
+while read -r line ; do
+
+EOD_STATUS=$(echo $line |awk -F ',' ' { print $1 } ')
+CONSIDTENT_BEFOR_HARD=$(echo $line |awk -F ',' ' { print $2 } ')
+SCHEMA_NAME=$(echo $line |awk -F ',' ' { print $3 } '|awk -F '/' ' { print $1 } ' )
+TABLE_NAME=$(echo $line |awk -F ',' ' { print $3 } '|awk -F '/' ' { print $2 } ' )
+CONTENT_GROUP=$(echo $line |awk -F ',' ' { print $3 } '|awk -F '/' ' { print $3 } ' )
+echo "
+INSERT INTO $TBL_NAME
+(
+ETL_RUN_KEY,
+ETL_RUN_DATE,
+SCHEMA_NAME,
+TABLE_NAME,
+CONTENT_GROUP,
+CONSIDTENT_BEFOR_HARD,
+EOD_STATUS
+)
+VALUES
+(
+'$ETL_RUN_KEY',
+$ETL_RUN_DATE,
+'$SCHEMA_NAME',
+'$TABLE_NAME',
+'$CONTENT_GROUP',
+'$CONSIDTENT_BEFOR_HARD',
+'$EOD_STATUS'
+ ) ; " >>$EDW_EOD_TBL_INS_SQL
+
+done < $SUCCESS_REC
+
+}
+
+
+
+# BELOW CONFIG FILE HOLDS VIEWPOINT SPECIFIC ENVIRONMENT DETAILS WHICH WILL HELP IN EASIER DEPLOYMENT OF FRAMEWORK.
+. /var/groupon/edwdevops/conf/opsviewpoint.cfg
+
+#MAIN SCRIPT BEGINS HERE
+ALL_PARS_PASSED="$*"
+
+VIEWPOINT_CONFIG=$EDW_VIEWPOINT_HOME/conf
+VIEWPOINT_PARAM=$VIEWPOINT_CONFIG/opsviewpoint.parm
+EDW_EOD_TBL_LOG_FILE=$EDW_VIEWPOINT_LOG/table_limits_eod-$(date +%F-%T).log
+EDW_EODTBL_MYSQL_FIL=$EDW_EODTBL_HOME/mysql_test.sql
+EDW_EODTBL_TEMPLATE=$EDW_EODTBL_HOME/mysql_test.lst
+EDW_EODTBL_MYSQL_RESULT=$EDW_EODTBL_HOME/mysql_test.csv
+EDW_EODTBL_TD_REPORT=$EDW_EODTBL_HOME/td_test.report
+EDW_EODTBL_TDSQL_FIL=$EDW_EODTBL_HOME/td_test.sql
+EDW_EODTBL_BTEQ_FIL=$EDW_EODTBL_HOME/td_test.bteq
+EDW_EODTBL_TD_RESULT=$EDW_EODTBL_HOME/td_test.csv
+EDW_EODTBL_STATUS_FIL=$EDW_EODTBL_HOME/tl_status_test.csv
+EDW_EODTBL_STATUS_HTML=$EDW_EODTBL_HOME/tl_status_test.html
+
+#DISPLAYING ALL PARAMETERS PASSED
+echo -e "$ALL_PARS_PASSED" >$EDW_EOD_TBL_LOG_FILE
+
+echo -e "Info\t\tTimestamp\t\t\t\tProcess\t\t\t\t\t\tMessage" >>$EDW_EOD_TBL_LOG_FILE
+echo -e "~~~~\t\t~~~~~~~~~\t\t\t\t~~~~~~~\t\t\t\t\t\t~~~~~~~" >>$EDW_EOD_TBL_LOG_FILE
+print_log_info 1 INFO EDW_EODTABL_STS "Started table_limits_eod.sh"
+print_log_info 1 INFO EDW_EODTABL_STS "Writing output to log file [$EDW_EOD_TBL_LOG_FILE]"
+
+print_log_info 1 INFO EDW_EODTABL_STS "Prepare Mysql sql file which fetches EOD details."
+
+echo "select case when consistent_before_hard < current_date then 'FAILED' else 'SUCCESS' end as status, consistent_before_hard, CONCAT(schema_name,'/',table_name,'/',content_group) as tablename from dwh_manage.table_limits where (1=0)" > $EDW_EODTBL_MYSQL_FIL
+awk -F'/' 'NF==3 {print "OR (schema_name=" $1 " and table_name=" $2 " and content_group=" $3 ")"}' $EDW_EODTBL_TEMPLATE >> $EDW_EODTBL_MYSQL_FIL
+echo "union select case when STR_TO_DATE(max_partition_id,'%Y%m%d%H%i') < current_date then 'FAILED' else 'SUCCESS' end as status, STR_TO_DATE(max_partition_id,'%Y%m%d%H%i'), CONCAT(environment,'/',table_name,'/',schema_name) as tablename from edw.table_limits where (1=0)" >> $EDW_EODTBL_MYSQL_FIL
+awk -F'/' 'NF==4 {print "OR (environment=" $1 " and table_name=" $2 " and schema_name=" $3 ")"}' $EDW_EODTBL_TEMPLATE >> $EDW_EODTBL_MYSQL_FIL
+echo ";" >> $EDW_EODTBL_MYSQL_FIL
+
+print_log_info 2 "Execute Mysql sql file :[${EDW_EODTBL_MYSQL_FIL}],which fetches EOD details"
+
+run_mysql_file DWH_MANAGE $EDW_EODTBL_MYSQL_FIL
+
+cat $TEMP_SQL_LOG |tr '\t' ,|tail -n +2 > $EDW_EODTBL_MYSQL_RESULT
+
+#mysql -hprod-pitstop-rw-vip.us.daas.grpn -udwhuser -pdwhpass dwh_manage <$EDW_EODTBL_MYSQL_FIL|tr '\t' ,|tail -n +2 > $EDW_EODTBL_MYSQL_RESULT
+
+print_log_info 1 INFO EDW_EODTABL_STS "Prepare TD sql file which fetches EOD details."
+
+TD_PASS=`grep -A6 "\[wh1_dsn\]" $EDW_ODBC_FIL|grep Password|cut -d= -f2`
+
+echo "
+    .logon "${TD_HOST}"/"${TD_USER}","${TD_PASS}";
+    .set width 10000
+    .os rm -f $EDW_EODTBL_TD_REPORT
+    .export report file=$EDW_EODTBL_TD_REPORT
+    .set separator ','
+    .run file $EDW_EODTBL_TDSQL_FIL
+    .export reset
+    .exit"> $EDW_EODTBL_BTEQ_FIL
+print_log_info 2 "Execute TD sql:[${EDW_EODTBL_BTEQ_FIL}]"
+
+bteq < $EDW_EODTBL_BTEQ_FIL
+cat $EDW_EODTBL_TD_REPORT|tail -n +3|tr -s ' ' > $EDW_EODTBL_TD_RESULT
+
+cat $EDW_EODTBL_MYSQL_RESULT $EDW_EODTBL_TD_RESULT|sort|uniq > $EDW_EODTBL_STATUS_FIL
+
+print_log_info 2 "Generate html"
+
+pipeline_dt=`date --date="yesterday" "+%F"`
+perc=$((100*$(cut -d, -f1 $EDW_EODTBL_STATUS_FIL|grep SUCCESS|wc -l)/$(cat $EDW_EODTBL_STATUS_FIL|wc -l)))
+run_tm=`date '+%FT%TZ'`
+utc_time=`date -u`
+
+echo "<html><title>EOD Table Limits</title><head><link rel="icon" href="favicon.png"></head><body>
+<link rel="stylesheet" type="text/css" href="progress.css" >
+<meta http-equiv="refresh" content="900">
+<body bgcolor=white>
+<h5 align="right" ; style=\"color:SLATEGRAY; font-size:10px ; margin: 0; padding: 0 ;\" ; <span style=font-weight:normal>
+<p style="display:inline">[Last refresh: </p>
+<p style="display:inline" id="min_e"></p>
+<p style="display:inline"> min back @ ${utc_time}]
+</span>
+</h5>
+<p>EOD Table Limits status for ${pipeline_dt} : <b> ${perc}% </b></p>
+<script>
+var refresh_e = new Date('${run_tm}');
+var now_e = new Date();
+var diff_e = now_e - refresh_e;
+var diff_min_e = Math.round(diff_e / 60000);
+document.getElementById('min_e').innerHTML= diff_min_e;
+</script>
+
+<table border=2 cellpadding=3 cellspacing=2>
+<tr>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>EOD Status</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>Consistent_before_hard</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>Table Name</b></th>
+</tr>" > $EDW_EODTBL_STATUS_HTML
+cat $EDW_EODTBL_STATUS_FIL|sed -e 's/$/<\/td><\/tr>/g' -e 's/^/<tr><td align="center" style="white-space:nowrap;">/g' -e 's/,/<\/td><td align="center" style="white-space:nowrap;">/g' >> $EDW_EODTBL_STATUS_HTML
+echo "</table>" >> $EDW_EODTBL_STATUS_HTML
+
+sed -i -e 's/">SUCCESS/color:#000000" bgcolor="#01DF01">SUCCESS/g' $EDW_EODTBL_STATUS_HTML
+sed -i -e 's/">FAILED/color:#000000" bgcolor="#FF0000">FAILED/g' $EDW_EODTBL_STATUS_HTML
+
+#ARCHIVE OLD HTML
+print_log_info 2 "Archive file:[$EDW_EODTBL_STATUS_HTML]"
+
+cp $EDW_EODTBL_STATUS_HTML $EDW_VIEWPOINT_ARCH_EOD/tl_status_$(date +%F_%T).html
+#cp $EDW_EODTBL_STATUS_FIL $EDW_VIEWPOINT_ARCH_EOD/tl_status_$(date +%F_%T).csv
+sed 's/ , /,/g' $EDW_EODTBL_STATUS_FIL >$EDW_VIEWPOINT_ARCH_EOD/tl_status_$(date +%F_%T).csv
+#PREPARE ENTRIES FOR VIEWPOINT DB.
+EDW_EOD_TBL_INS_SQL=$EDW_VIEWPOINT_LOG/ins_eod_tables.sql
+TMP_FIL_REPLACE=$EDW_VIEWPOINT_LOG/eod_table_tmp.csv
+
+#PREPARE LOGIC FOR FIRST RUN.
+SUCCESS_REC=$EDW_VIEWPOINT_ARCH_EOD/success_tl_status_$(date +%F).csv
+RUN_DT=$(date "+%F %H:%M UTC")
+ETL_RUN_KEY=$(echo $RUN_DT |cut -d" " -f1|tr -d '-')
+ETL_RUN_DATE="CURDATE()"
+
+if [[ $(ls -ltr $EDW_VIEWPOINT_ARCH_EOD/tl_status_$(date +%F)*.csv|wc -l) -eq 1 ]] ; then
+   print_log_info 2 "First run for the $(date +%F)"
+   PREV_STATUS_FILE=$(ls -ltr $EDW_VIEWPOINT_ARCH_EOD/tl_status_$(date +%F)*.csv|tr -s ' ' |cut -d' ' -f9)
+   sed -i 's/ , /,/g' $PREV_STATUS_FILE
+   REF_FILE=$EDW_VIEWPOINT_ARCH_EOD/ref_tl_status_$(date +%F).csv
+   print_log_info 2 "Generate Template file:[${REF_FILE}]"
+   sed 's/^[^,]*,/FAILED,/' $PREV_STATUS_FILE >$REF_FILE
+   #GET THE SUCESS RECORDS ALONE.
+   #SUCCESS_REC=$EDW_VIEWPOINT_ARCH_EOD/success_tl_status_$(date +%F).csv
+   comm -13 $REF_FILE $PREV_STATUS_FILE >$SUCCESS_REC
+   #PREPARE SQL FOR VIEWPOINT DB AUDIT.
+   #RUN_DT=$(date "+%F %H:%M UTC")
+   #ETL_RUN_KEY=$(echo $RUN_DT |cut -d" " -f1|tr -d '-')
+   #ETL_RUN_DATE="CURDATE()"
+   #   echo "SET auto_increment_increment=1 ;" >$EDW_EOD_TBL_INS_SQL
+   #   while read -r line ; do
+   #
+   #    EOD_STATUS=$(echo $line |awk -F ',' ' { print $1 } ')
+   #    CONSIDTENT_BEFOR_HARD=$(echo $line |awk -F ',' ' { print $2 } ')
+   #    SCHEMA_NAME=$(echo $line |awk -F ',' ' { print $3 } '|awk -F '/' ' { print $1 } ' )
+   #    TABLE_NAME=$(echo $line |awk -F ',' ' { print $3 } '|awk -F '/' ' { print $2 } ' )
+   #    CONTENT_GROUP=$(echo $line |awk -F ',' ' { print $3 } '|awk -F '/' ' { print $3 } ' )
+   #    echo "
+   #    INSERT INTO OPS_EOD_TABLES_DETAIL
+   #    (
+   #    ETL_RUN_KEY,
+   #    ETL_RUN_DATE,
+   #    SCHEMA_NAME,
+   #    TABLE_NAME,
+   #    CONTENT_GROUP,
+   #    CONSIDTENT_BEFOR_HARD,
+   #    EOD_STATUS
+   #    )
+   #    VALUES
+   #    (
+   #    '$ETL_RUN_KEY',
+   #    $ETL_RUN_DATE,
+   #    '$SCHEMA_NAME',
+   #    '$TABLE_NAME',
+   #    '$CONTENT_GROUP',
+   #    '$CONSIDTENT_BEFOR_HARD',
+   #    '$EOD_STATUS'
+   #     ) ; " >>$EDW_EOD_TBL_INS_SQL
+   #
+   #    done < $SUCCESS_REC
+    prepare_eod_inserts $SUCCESS_REC OPS_EOD_TABLES_DETAIL
+    print_log_info 2 "Execute insert sql:[${EDW_EOD_TBL_INS_SQL}],which insert intial audit entries into viewpoint DB."
+    run_mysql_file  VIEWPOINT $EDW_EOD_TBL_INS_SQL
+elif [[ $perc -eq 100 && $(ls -ltr $EDW_VIEWPOINT_ARCH_EOD/tl_status_$(date +%F)*.csv|wc -l) -ne 1  ]] ; then
+  print_log_info 2 "All EOD tables loaded/completed for the day"
+  #Mark summary table or create view on top of detail table.
+else
+  print_log_info 2 "Load incremental records into viewpoint db"
+  PREV_STATUS_FILE=$(ls -ltr $EDW_VIEWPOINT_ARCH_EOD/tl_status_$(date +%F)*.csv|tail -2 |head -1|tr -s ' ' |cut -d' ' -f9)
+  #PREV_STATUS_FILE=$(ls -ltr $EDW_VIEWPOINT_ARCH_EOD/tl_status_$(date +%F)*.csv|tail -1 |tr -s ' ' |cut -d' ' -f9)
+  print_log_info 2 "Prev status file:[${PREV_STATUS_FILE}]"
+  #sed -i 's/ , /,/g' $PREV_STATUS_FILE
+  #sed -i 's/ , /,/g' $EDW_EODTBL_STATUS_FIL
+  #comm -13 $PREV_STATUS_FILE $EDW_EODTBL_STATUS_FIL >$SUCCESS_REC
+
+  #PREPARE SQLS FOR TEMP TABLES TO GET INCREMENTAL STATUS.
+
+  prepare_eod_inserts $PREV_STATUS_FILE TMP_OPS_EOD_TABLES_PREV Y
+  print_log_info 2 "Execute Mysql sql file which loads prev run details into temp table"
+  run_mysql_file  VIEWPOINT $EDW_EOD_TBL_INS_SQL
+  prepare_eod_inserts $EDW_EODTBL_STATUS_FIL TMP_OPS_EOD_TABLES_CURR Y
+  print_log_info 2 "Execute Mysql sql file which loads current run details into temp table"
+  run_mysql_file  VIEWPOINT $EDW_EOD_TBL_INS_SQL
+
+  #PREPARE SQL TO INSERT INCREMENTAL RECORDS FROM TEMP TABLES
+  print_log_info 2 "prepare sql file which loads incremental records into final audit table"
+  echo "SET auto_increment_increment=1 ;" >$EDW_EOD_TBL_INS_SQL
+  echo "INSERT INTO OPS_EOD_TABLES_DETAIL (ETL_RUN_KEY,ETL_RUN_DATE,SCHEMA_NAME,TABLE_NAME,CONTENT_GROUP,CONSIDTENT_BEFOR_HARD,EOD_STATUS) SELECT A.ETL_RUN_KEY,A.ETL_RUN_DATE,A.SCHEMA_NAME,A.TABLE_NAME,A.CONTENT_GROUP,A.CONSIDTENT_BEFOR_HARD,A.EOD_STATUS
+FROM  TMP_OPS_EOD_TABLES_CURR A LEFT JOIN TMP_OPS_EOD_TABLES_PREV B
+ON A.ETL_RUN_KEY=B.ETL_RUN_KEY AND A.SCHEMA_NAME=B.SCHEMA_NAME AND A.CONTENT_GROUP=B.CONTENT_GROUP AND A.EOD_STATUS=B.EOD_STATUS
+WHERE B.ETL_RUN_KEY IS NULL;" >>$EDW_EOD_TBL_INS_SQL
+
+  #prepare_eod_inserts $SUCCESS_REC
+  print_log_info 2 "Execute incremtal insert which loads final audit table"
+  run_mysql_file  VIEWPOINT $EDW_EOD_TBL_INS_SQL
+fi
+#cp $EDW_EODTBL_STATUS_FIL $EDW_VIEWPOINT_ARCH_EOD/tl_status_$(date +%F_%T).csv
+print_log_info 1 INFO EDW_EODTABL_STS "Successfully completed EOD tables process."

@@ -1,0 +1,182 @@
+#!/bin/bash
+
+# BELOW CONFIG FILE HOLDS VIEWPOINT SPECIFIC ENVIRONMENT DETAILS WHICH WILL HELP IN EASIER DEPLOYMENT OF FRAMEWORK.
+. /var/groupon/edwdevops/conf/opsviewpoint.cfg
+
+#MAIN SCRIPT BEGINS HERE
+ALL_PARS_PASSED="$*"
+
+#CHECK IF THERE ARE ANY OVERRIDE PARAMETERS, ELSE PICK FROM DEFAULT CONFIG.
+
+VIEWPOINT_CONFIG=$EDW_VIEWPOINT_HOME/conf
+VIEWPOINT_PARAM=$VIEWPOINT_CONFIG/opsviewpoint.parm
+
+EDW_LONG_RUN_LOG_FILE=$EDW_VIEWPOINT_LOG/arch_long_running-$(date +%F-%T).log
+ARCH_LONG_RUN_HTML=$EDW_LONGRUN_HOME/archive_test.html
+OVR_ALL_PIPL_HTML=$EDW_PIPELINE_HOME/archive_pipeline.html
+EOD_TBL_HTML=$EDW_EODTBL_HOME/archive_eod.html
+BH_TBL_HTML=$EDW_MOB_GDOOP_HOME/archive_bh.html
+
+#PREPARE LONG RUNNING JOB HISTORY.
+echo '<html><title>Long Run jobs History</title><head><link rel=icon href=favicon.png></head><body>
+
+<h2>Long Running Jobs History</h2>
+
+<title>Long Running Jobs History</title>
+<head><link rel="icon" href="favicon.png"></head>
+<body bgcolor="#FFFFFF">
+<meta http-equiv="refresh" content="900">
+<font color="#000000" style="font-family:calibri;font-size:12px;">'>$ARCH_LONG_RUN_HTML
+
+#DELTE OLDER FILES.
+find $EDW_VIEWPOINT_ARCH_LONG -mtime +2 -delete
+
+#FETCH LONG RUNNING HISTORY FILES.
+echo '<table border=1 cellpadding=2 cellspacing=2>
+<tr style=font-size:12px>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Measured At</b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Opswise Count</b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Hadoop Count</b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Link</b></th>
+</tr> ' >>$ARCH_LONG_RUN_HTML
+
+for i in $(ls -lt $EDW_VIEWPOINT_ARCH_LONG/test_long_running*.html|tr -s ' ' |cut -d' ' -f9) ; do
+ file_name=$(basename $i)
+ link_name=$(echo $file_name|tr -d ".html")
+ LONG_RUN_OPS_COUNT=$(grep "Long Running Opswise Job Count" $i |grep -o '<b>.*</b>'|sed 's/\(<b>\|<\/b>\)//g')
+ LONG_RUN_HADOOP_COUNT=$(grep "Long Running Hadoop Job Count" $i |grep -o '<b>.*</b>'|sed 's/\(<b>\|<\/b>\)//g')
+ MEASURE_AT=$(grep "refresh_l" $i |head -1 |cut -d'(' -f2|cut -d')' -f1| sed -e "s/'//g" -e "s/T/ /g" -e "s/Z//g")
+ 
+ echo '<tr style="font-size:10px" bgcolor="#FFFFFF"><td align="left" style="white-space:nowrap;">MEASURE_AT</td><td align="left" style="white-space:nowrap;">LONG_RUN_OPS_COUNT</td><td align="left" style="white-space:nowrap;">LONG_RUN_HADOOP_COUNT</td><td align="left" style="white-space:nowrap;"><div>
+<a href=VIEWPOINT_MSTR_PORT/archive/long_running/file_name target=_blank>file_name</a>
+</div></td></tr>' |sed "s/MEASURE_AT/$MEASURE_AT/g" | sed "s/LONG_RUN_OPS_COUNT/$LONG_RUN_OPS_COUNT/g" | sed "s/LONG_RUN_HADOOP_COUNT/$LONG_RUN_HADOOP_COUNT/g" |sed  "s^VIEWPOINT_MSTR_PORT^$VIEWPOINT_MSTR_PORT^g" | sed "s/file_name/$file_name/g" >>$ARCH_LONG_RUN_HTML 
+ 
+done
+
+echo "</table>" >>$ARCH_LONG_RUN_HTML
+echo "</html>" >>$ARCH_LONG_RUN_HTML
+
+#PREPARE OVERALL PIPELINE HISTORY.
+echo '<html><title>Pipeline History</title><head><link rel=icon href=favicon.png></head><body>
+
+<h2>EDW Overall Pipeline History</h2>
+
+<title>EDW Overall Pipeline History</title>
+<head><link rel="icon" href="favicon.png"></head>
+<body bgcolor="#FFFFFF">
+<meta http-equiv="refresh" content="900">
+<font color="#000000" style="font-family:calibri;font-size:12px;">' >$OVR_ALL_PIPL_HTML
+
+echo '<table border=1 cellpadding=2 cellspacing=2>
+<tr style=font-size:12px>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Measured At</b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>ETL Load Date</b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>SLA % </b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Link</b></th>
+</tr> ' >>$OVR_ALL_PIPL_HTML
+
+
+#FETCH OVERALL PIPELINE HISTORY FILES
+for i in $(ls -lt $EDW_VIEWPOINT_ARCH_OVRPL/overall_pipeline_*.html|tr -s ' ' |cut -d' ' -f9) ; do
+ file_name=$(basename $i)
+ link_name=$(echo $file_name|tr -d ".html")
+ MEASURE_AT=$(grep "refresh_o" $i |head -1 |cut -d'(' -f2|cut -d')' -f1| sed -e "s/'//g" -e "s/T/ /g" -e "s/Z//g")
+ ETL_LOAD_DATE=$(grep "EDW Pipeline Status for" $i |cut -d":" -f1|rev|cut -d" " -f2|rev)
+ SLA_PERC=$(grep "EDW Pipeline Status for" $i |grep -o '<b>.*</b>'|sed 's/\(<b>\|<\/b>\)//g')
+
+ echo '<tr style="font-size:10px" bgcolor="#FFFFFF">
+<td align="left" style="white-space:nowrap;">MEASURE_AT</td>
+<td align="left" style="white-space:nowrap;">ETL_LOAD_DATE</td>
+<td align="left" style="white-space:nowrap;">SLA_PERC</td>
+<td align="left" style="white-space:nowrap;"><div>
+<a href=VIEWPOINT_MSTR_PORT/archive/overall_pipeline/file_name target=_blank>file_name</a>
+</div></td></tr>' |sed "s/MEASURE_AT/$MEASURE_AT/g" | sed "s/SLA_PERC/$SLA_PERC/g" |sed "s/ETL_LOAD_DATE/$ETL_LOAD_DATE/g" |sed  "s^VIEWPOINT_MSTR_PORT^$VIEWPOINT_MSTR_PORT^g" | sed "s/file_name/$file_name/g" >>$OVR_ALL_PIPL_HTML
+done
+
+echo "</table>" >>$OVR_ALL_PIPL_HTML
+echo "</html>" >>$OVR_ALL_PIPL_HTML
+
+#DELTE OLDER FILES.
+find $EDW_VIEWPOINT_ARCH_OVRPL -mtime +2 -delete
+
+#PREPARE EOD TABLES HISTORY.
+echo '<html><title>EOD Tables History</title><head><link rel=icon href=favicon.png></head><body>
+
+<h2>EOD Tables History</h2>
+
+<title>EOD Tables History</title>
+<head><link rel="icon" href="favicon.png"></head>
+<body bgcolor="#FFFFFF">
+<meta http-equiv="refresh" content="900">
+<font color="#000000" style="font-family:calibri;font-size:12px;">' >$EOD_TBL_HTML
+
+echo '<table border=1 cellpadding=2 cellspacing=2>
+<tr style=font-size:12px>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Measured At</b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>ETL Load Date</b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>COMPLETION % </b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Link</b></th>
+</tr> ' >>$EOD_TBL_HTML
+
+#FETCH EOD TABLES HISTORY FILES
+for i in $(ls -lt $EDW_VIEWPOINT_ARCH_EOD/tl_status_*.html|tr -s ' ' |cut -d' ' -f9) ; do
+ file_name=$(basename $i)
+ link_name=$(echo $file_name|tr -d ".html")
+ MEASURE_AT=$(grep "refresh_e" $i |head -1 |cut -d'(' -f2|cut -d')' -f1| sed -e "s/'//g" -e "s/T/ /g" -e "s/Z//g")
+ ETL_LOAD_DATE=$(grep "EOD Table Limits status for " $i |cut -d":" -f1|rev|cut -d" " -f2|rev)
+ SLA_PERC=$(grep "EOD Table Limits status for " $i |grep -o '<b>.*</b>'|sed 's/\(<b>\|<\/b>\)//g')
+
+ echo '<tr style="font-size:10px" bgcolor="#FFFFFF">
+<td align="left" style="white-space:nowrap;">MEASURE_AT</td>
+<td align="left" style="white-space:nowrap;">ETL_LOAD_DATE</td>
+<td align="left" style="white-space:nowrap;">SLA_PERC</td>
+<td align="left" style="white-space:nowrap;"><div>
+<a href=VIEWPOINT_MSTR_PORT/archive/overall_pipeline/file_name target=_blank>file_name</a>
+</div></td></tr>' |sed "s/MEASURE_AT/$MEASURE_AT/g" | sed "s/SLA_PERC/$SLA_PERC/g" |sed "s/ETL_LOAD_DATE/$ETL_LOAD_DATE/g" |sed  "s^VIEWPOINT_MSTR_PORT^$VIEWPOINT_MSTR_PORT^g" | sed "s/file_name/$file_name/g" >>$EOD_TBL_HTML
+done
+
+echo "</table>" >>$EOD_TBL_HTML
+echo "</html>" >>$EOD_TBL_HTML
+
+#DELTE OLDER FILES.
+find $EDW_VIEWPOINT_ARCH_EOD -mtime +2 -delete
+
+#PREPARE BH TABLES HISTORY.
+echo '<html><title>Mobile-BH Gdoop Tables History</title><head><link rel=icon href=favicon.png></head><body>
+
+<h2>Mobile-BH Tables History</h2>
+
+<title>Mobile-BH Tables History</title>
+<head><link rel="icon" href="favicon.png"></head>
+<body bgcolor="#FFFFFF">
+<meta http-equiv="refresh" content="900">
+<font color="#000000" style="font-family:calibri;font-size:12px;">' >$BH_TBL_HTML
+
+echo '<table border=1 cellpadding=2 cellspacing=2>
+<tr style=font-size:12px>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Measured At</b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Load Compled Till</b></th>
+  <th align=center style=white-space:nowrap bgcolor=LIGHTBLUE><b>Link</b></th>
+</tr> ' >>$BH_TBL_HTML
+
+#FETCH EOD TABLES HISTORY FILES
+for i in $(ls -lt $EDW_VIEWPOINT_ARCH_BH/bh_mob_gdoop_*.html|tr -s ' ' |cut -d' ' -f9) ; do
+ file_name=$(basename $i)
+ link_name=$(echo $file_name|tr -d ".html")
+ MEASURE_AT=$(grep "refresh_g" $i |head -1 |cut -d'(' -f2|cut -d')' -f1| sed -e "s/'//g" -e "s/T/ /g" -e "s/Z//g")
+ #ETL_LOAD_DATE=$(grep "EOD Table Limits status for " $i |cut -d":" -f1|rev|cut -d" " -f2|rev)
+ SLA_PERC=$(grep "Load completed till " $i |grep -o '<b>.*</b>'|sed 's/\(<b>\|<\/b>\)//g')
+
+ echo '<tr style="font-size:10px" bgcolor="#FFFFFF">
+<td align="left" style="white-space:nowrap;">MEASURE_AT</td>
+<td align="left" style="white-space:nowrap;">SLA_PERC</td>
+<td align="left" style="white-space:nowrap;"><div>
+<a href=VIEWPOINT_MSTR_PORT/archive/overall_pipeline/file_name target=_blank>file_name</a>
+</div></td></tr>' |sed "s/MEASURE_AT/$MEASURE_AT/g" | sed "s/SLA_PERC/$SLA_PERC/g" |sed  "s^VIEWPOINT_MSTR_PORT^$VIEWPOINT_MSTR_PORT^g" | sed "s/file_name/$file_name/g" >>$BH_TBL_HTML
+done
+
+echo "</table>" >>$BH_TBL_HTML
+echo "</html>" >>$BH_TBL_HTML
+
+#DELTE OLDER FILES.
+find $EDW_VIEWPOINT_ARCH_BH -mtime +2 -delete

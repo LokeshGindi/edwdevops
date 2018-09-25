@@ -1,0 +1,432 @@
+#!/bin/bash
+#################################################################################################
+# Program name : overall_pipeline.sh                                                            #
+# Author       : EDW DEVOPS                                                                     #
+# Description  : This script would read the config details from view point DB and act against   #
+#                opswise DB accordingly to fetch SLA details.Also,writes the SLA summary & audit#
+#                details to viewpoint DB                                                        #
+# Usage        : This script takes parameters in UNIX style format.There are no mandate params. #
+#                Below are the options:                                                         #
+#                -email : used to send overall pipeline status email to given DL list           #
+#                -lookback_days : can be used in case of carry over pipeline to check status    #
+#                -refresh_sla_list: can be used in case if we added/modified any SLAs at conf DB#
+#Ex1           : sh overall_pipeline.sh                                                         #
+#Ex 2          : sh overall_pipeline.sh -email <DL List delimited by ;>                         #                            
+#Ex 3
+#
+#Pending:
+#Handle  the scenario of carry over pipeline
+#Handle the scenario of running pipeline script for look back days
+#Refresh SLA definition from viepoint db.
+
+#FUNCTION TO PRINT THE LOG INFORMATION INTO THE LOG FILE
+
+function print_log_info {
+ case $1 in
+  1)    echo -e "$2\t$(date '+%e %b %Y %T')\t$3\t\t$4" | tee -a $EDW_OVERALL_LOG_FILE
+        ;;
+  2)    echo -e "\t\t\t\t\t\t\t$2" | tee -a $EDW_OVERALL_LOG_FILE
+        ;;
+  usage) echo -e ""
+        echo -e "Usage: sh overall_pipeline.sh <<params>>"
+        echo -e "Ex: sh overall_pipeline.sh"
+        echo -e ""
+        ;;
+ esac
+}
+
+#FUNCTION TO FETCH MYSQL DB DETAILS AND EXECUTE SQL.
+
+function run_mysql_file {
+#MYSQLDB_ID,sql_file,fetch/execute xxxx details, DBName
+MYSQLDB_ID=$1
+MYSQL_RUN_FILE=$2
+
+TEMP_SQL_LOG=$EDW_VIEWPOINT_LOG/temp_mysql_output.log
+
+MYSQL_DB_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_HOST_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_HOST_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_DB_USER=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DB_USER\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_DBUSR_PASSWD=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DBUSR_PASSWD\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+
+ if ! mysql -u$MYSQLDB_DB_USER -p$MYSQLDB_DBUSR_PASSWD -D $MYSQL_DB_NAME -h $MYSQLDB_HOST_NAME -N <$MYSQL_RUN_FILE > $TEMP_SQL_LOG 2>&1 ; then
+   print_log_info 1 ERROR OVRALL_PIPE_STS "Not able to insert SLA $3 entry into viewpoint DB: [${MYSQLDB_DB_USER}@${MYSQL_DB_NAME}]."
+   sed 's/^/                                              /' $TEMP_SQL_LOG | tee -a $EDW_OVERALL_LOG_FILE
+   exit 1
+ else
+   print_log_info 1 INFO OVRALL_PIPE_STS "Successfully inserted SLA $3 metrics into audit table."
+ fi
+
+rm -f $TEMP_SQL_LOG
+}
+
+# BELOW CONFIG FILE HOLDS VIEWPOINT SPECIFIC ENVIRONMENT DETAILS WHICH WILL HELP IN EASIER DEPLOYMENT OF FRAMEWORK.
+. /var/groupon/edwdevops/conf/opsviewpoint.cfg
+
+#MAIN SCRIPT BEGINS HERE
+ALL_PARS_PASSED="$*"
+
+#CHECK IF THERE ARE ANY OVERRIDE PARAMETERS, ELSE PICK FROM DEFAULT CONFIG
+#email,prev day report
+while [ ! -z $1 ]; do
+ case "$1" in
+  -email) shift
+          email_list="$1"
+          ;;
+
+  -lookback_days) shift
+           report_day="$1"
+          ;;
+
+  -refresh_sla_list) shift
+           refresh_flag="$1"
+          ;;
+
+  *)    echo -e "overall_pipeline.sh : illegal option -- [$1]"
+        print_log_info usage
+        exit 1
+        ;;
+  esac
+  shift;
+done
+
+EDW_OVERALL_LOG_FILE=$EDW_VIEWPOINT_LOG/overall_pipeline-$(date +%F-%T).log
+OVR_ALL_PLINE_HTML=$EDW_PIPELINE_HOME/overall_pipeline_test.html
+OVR_ALL_PLINE_HTML_EMAIL=$EDW_PIPELINE_HOME/overall_pipeline_email_test.html
+DONE_FILE_PATH=$EDW_PIPELINE_HOME/done
+VIEWPOINT_CONFIG=$EDW_VIEWPOINT_HOME/conf
+VIEWPOINT_PARAM=$VIEWPOINT_CONFIG/opsviewpoint.parm
+SLA_TEMPLATE_FILE=$EDW_PIPELINE_HOME/overall_pipeline_test.lst
+GENERATED_SLA_SQL=$EDW_PIPELINE_HOME/overall_pipeline_test.sql
+PIPELINE_SQL_RESULT=$EDW_PIPELINE_HOME/overall_pipeline_test.txt
+#VIEWPOINT_MSTR_PORT="pit-prod-owagent3.snc1:8080"
+VIEWPOINT_MSTR_PORT="https://devopsviewpoint.groupondev.com"
+SLA_ENTRY_SQL_FIL=$EDW_PIPELINE_HOME/viewpoint_sla_entry.sql
+TEMP_SQL_LOG=$EDW_VIEWPOINT_LOG/temp_mysql_output.log
+SLA_TEMPLATE_SQL=$EDW_VIEWPOINT_LOG/new_sla.sql
+SLA_REFRESH_LOG=$EDW_VIEWPOINT_LOG/new_sla.log
+
+SLA_BUFFER_TIME_IN_SEC=600
+
+# pit-prod-owagent3.snc1:8080 should be configurable - PENDING
+EMAIL_DT=`date "+%F %H:%M UTC"`
+
+#FETCH EMAIL NOTIFICATION DETAILS FROM VIEWPOINT DB - PENDING
+EMAIL_FROM="lgindi@groupon.com"
+EMAIL_TO="lgindi@groupon.com"
+
+
+#DISPLAYING ALL PARAMETERS PASSED
+echo -e "$ALL_PARS_PASSED" >$EDW_OVERALL_LOG_FILE
+
+echo -e "Info\tTimestamp\t\tProcess\t\t\tMessage" >>$EDW_OVERALL_LOG_FILE
+echo -e "~~~~\t~~~~~~~~~\t\t~~~~~~~\t\t\t~~~~~~~" >>$EDW_OVERALL_LOG_FILE
+print_log_info 1 INFO OVRALL_PIPE_STS "Started overall_pipeline.sh"
+print_log_info 1 INFO OVRALL_PIPE_STS "Writing output to log file [$EDW_OVERALL_LOG_FILE]"
+
+#FETCH MYSQL OPSWISE DB DETAILS.
+#BELOW MYSQL ID NEEDS TO BE CONFIGARABLE AT DB LEVEL - PENDING
+
+#MYSQLDB_ID=SNC_OPSWISE
+#MYSQL_DB_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+#MYSQLDB_HOST_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_HOST_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+#MYSQLDB_DB_USER=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DB_USER\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+#MYSQLDB_DBUSR_PASSWD=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DBUSR_PASSWD\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+
+#WRITE A FUNCTION TO CHECK PARAM FILE ENTRIES. - PENDING
+
+#email_list=$1
+#OVR_ALL_PLINE_HTML=/var/groupon/edwdevops/overall_pipeline/overall_pipeline_test.html
+#OVR_ALL_PLINE_HTML_EMAIL=/var/groupon/edwdevops/overall_pipeline/overall_pipeline_email_test.html
+#DONE_FILE_PATH=/var/groupon/edwdevops/overall_pipeline/done
+
+#CHECK REPORT GENERATION DATE.
+#skip the sla entry if already exist for carry over days.
+#define rules for sla summary table entry:
+#check num of pending subj  + completed = total sla jobs
+#then make an sla entry
+#else
+#wait until 23:45 run and mark delay reason as carry-over
+#update sla entry for given lookbak day.
+
+if [[ -z "$report_day" ]] ; then
+   REPORT_DATE=current_date
+   print_log_info 2 "Running pipeline report for current day."
+else
+   REPORT_DATE="current_date() - INTERVAL ${report_day} DAY"
+   print_log_info 2 "Running pipeline report with look back days of:${report_day}"
+fi
+
+#REFRESH SLA LIST IF OPTED.RE-GENERATE SLA TEMPLATE FILE. - PENDING
+#ADD PLACE HOLDER FOR SLA BUFFER TIME
+
+if [[ -z "$refresh_flag" ]] ; then
+   print_log_info 2 "Not Opted for SLA DB Refresh."
+else
+    print_log_info 2 "Opted for SLA DB Refresh."
+    echo "SELECT CONCAT(SUBJECT_AREA,'|',JOB_NAME,'|',SLA_UTC) FROM OPS_SLA_JOB_DEFINITION WHERE SOFT_DELETE=0;" >$SLA_TEMPLATE_SQL
+    #run_mysql_file VIEWPOINT $SLA_TEMPLATE_SQL "SLA details"
+    MYSQLDB_ID=VIEWPOINT
+    MYSQL_DB_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+    MYSQLDB_HOST_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_HOST_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+    MYSQLDB_DB_USER=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DB_USER\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+    MYSQLDB_DBUSR_PASSWD=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DBUSR_PASSWD\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+    if ! mysql -u$MYSQLDB_DB_USER -p$MYSQLDB_DBUSR_PASSWD -D $MYSQL_DB_NAME -h $MYSQLDB_HOST_NAME -N <$SLA_TEMPLATE_SQL >$SLA_REFRESH_LOG 2>&1 ; then
+      print_log_info 1 ERROR OVRALL_PIPE_STS "Not able to fetch SLA job definitions from viewpoint DB: [${MYSQLDB_DB_USER}@${MYSQL_DB_NAME}]."
+      sed 's/^/                                              /' $SLA_REFRESH_LOG | tee -a $EDW_OVERALL_LOG_FILE
+      exit 1
+    else
+      print_log_info 1 INFO OVRALL_PIPE_STS "Successfully fetched SLA job definitions from viewpoint DB: [${MYSQLDB_DB_USER}@${MYSQL_DB_NAME}]."
+      #SWAP THE LOG FILE WITH SLA_TEMPLATE_FILE
+      cp $SLA_TEMPLATE_FILE $EDW_PIPELINE_HOME/overall_pipeline_test.lst_$(date +%F-%T)
+      mv $SLA_REFRESH_LOG $SLA_TEMPLATE_FILE
+    fi
+    #rm -f $SLA_REFRESH_LOG
+fi
+
+
+#while IFS='|' read -r subject jobname sla; do echo "select '${subject}' as subject, '${jobname}' as jobname, case status_code when 200 then 'SUCCESS' when 190 then 'FINISHED' when 80 then 'RUNNING' when 140 then ' FAILED' when 81 then ' FAILED' else ' WAITING' end as jobstatus, DATE_FORMAT(case when status_code=200 then end_time end, '%H:%i') as endtime, '${sla}' as sla, SUBSTRING_INDEX(SEC_TO_TIME(TIME_TO_SEC(coalesce(time(case when status_code=200 then end_time end),CURTIME()))-TIME_TO_SEC('${sla}')),':',2) as timediff, case when TIME_TO_SEC('${sla}') - TIME_TO_SEC(coalesce(time(case when status_code=200 then end_time end),CURTIME())) < 0 then 'DELAYED' else case when case when status_code=200 then end_time end is not null then 'ON-TIME' else case when TIME_TO_SEC('${sla}') - TIME_TO_SEC(CURTIME()) <= 3600 then 'NEAR DELAYED' else NULL end end end as delaystatus from ops_exec where (name like '${jobname}_$%' or name like '${jobname}_201%' or name='${jobname}') and cast(trigger_time as date)=current_date;"; done < /var/groupon/edwdevops/overall_pipeline/overall_pipeline.lst > /var/groupon/edwdevops/overall_pipeline/overall_pipeline.sql
+
+#while IFS='|' read -r subject jobname sla; do echo "select '${subject}' as subject, '${jobname}' as jobname, case status_code when 200 then 'SUCCESS' when 190 then 'FINISHED' when 80 then 'RUNNING' when 140 then ' FAILED' when 81 then ' FAILED' else ' WAITING' end as jobstatus, DATE_FORMAT(case when status_code=200 then end_time end, '%H:%i') as endtime, '${sla}' as sla, SUBSTRING_INDEX(SEC_TO_TIME(TIME_TO_SEC(coalesce(time(case when status_code=200 then end_time end),CURTIME()))-TIME_TO_SEC('${sla}')),':',2) as timediff, case when TIME_TO_SEC('${sla}') - TIME_TO_SEC(coalesce(time(case when status_code=200 then end_time end),CURTIME())) < 0 then 'DELAYED' else case when case when status_code=200 then end_time end is not null then 'ON-TIME' else case when TIME_TO_SEC('${sla}') - TIME_TO_SEC(CURTIME()) <= 3600 then 'NEAR DELAYED' else NULL end end end as delaystatus from ops_exec where (name like '${jobname}_$%' or name like '${jobname}_201%' or name='${jobname}') and cast(trigger_time as date)=$REPORT_DATE;"; done < $SLA_TEMPLATE_FILE > $GENERATED_SLA_SQL
+
+while IFS='|' read -r subject jobname sla; do echo "select '${subject}' as subject, '${jobname}' as jobname, case status_code when 200 then 'SUCCESS' when 190 then 'FINISHED' when 80 then 'RUNNING' when 140 then ' FAILED' when 81 then ' FAILED' else ' WAITING' end as jobstatus, DATE_FORMAT(case when status_code=200 then end_time end, '%H:%i') as endtime, '${sla}' as sla,                                  SUBSTRING_INDEX(SEC_TO_TIME(TIME_TO_SEC(coalesce(time(case when status_code=200 then end_time end),CURTIME()))-TIME_TO_SEC('${sla}')),':',2) as timediff, case when TIME_TO_SEC('${sla}') -                 TIME_TO_SEC(coalesce(time(case when status_code=200 then end_time end),CURTIME())) < -${SLA_BUFFER_TIME_IN_SEC} then 'DELAYED' else case when case when status_code=200 then end_time end is not null then 'ON-TIME' else case when  TIME_TO_SEC('${sla}') - TIME_TO_SEC(CURTIME()) <= 3600 then 'NEAR DELAYED' else NULL end end end as delaystatus from ops_exec where (name like '${jobname}_$%' or name like '${jobname}_201%' or            name='${jobname}') and cast(trigger_time as date)=$REPORT_DATE;"; done < $SLA_TEMPLATE_FILE > $GENERATED_SLA_SQL
+
+MYSQLDB_ID=SNC_OPSWISE
+MYSQL_DB_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_HOST_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_HOST_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_DB_USER=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DB_USER\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_DBUSR_PASSWD=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DBUSR_PASSWD\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+
+print_log_info 2 "Generated sql which fetches opswise SLA job details: [${GENERATED_SLA_SQL}]"
+print_log_info 2 "Execute sql which fetches opswise SLA job details against : [${MYSQLDB_DB_USER}@${MYSQLDB_DB_USER}] "
+
+if ! mysql -u$MYSQLDB_DB_USER -p$MYSQLDB_DBUSR_PASSWD -D $MYSQL_DB_NAME -h $MYSQLDB_HOST_NAME -N <$GENERATED_SLA_SQL |tr '\t' ,|sed 's/'NULL'//g'|sort -t"," -k7d,7 -k6nr,6 > $PIPELINE_SQL_RESULT 2>&1 ; then
+   print_log_info 1 ERROR OVRALL_PIPE_STS "Not able to fetch SLA job details from opswise DB."
+   sed 's/^/                                              /' $PIPELINE_SQL_RESULT
+   exit 1
+else
+   print_log_info 1 INFO OVRALL_PIPE_STS "Successfully fetched SLA job details against opswise DB."
+fi
+
+
+#mysql -hgds-snc1-prod-opswise-cntrl-rw-vip.snc1 -uopswise_ro -popswise_ro -Dopswise -N < /var/groupon/edwdevops/overall_pipeline/overall_pipeline.sql|tr '\t' ,|sed 's/'NULL'//g'|sort -t"," -k7d,7 -k6nr,6 > /var/groupon/edwdevops/overall_pipeline/overall_pipeline.txt
+
+#GENERATE OPSWISE REPORT FOR PIPELINE JOBS
+
+#if ! mysql -u $MYSQL_DB_USER -p$MYSQL_DBUSR_PASSWD -D $MYSQL_DB_NAM -h $MYSQL_HOST_NAM -N < $GENERATED_SLA_SQL |tr '\t' ,|sed 's/'NULL'//g'|sort -t"," -k7d,7 -k6nr,6 > $PIPELINE_SQL_RESULT  2>&1 ; then
+# print_log_info 1 ERROR OVRALL_PIPE_STS "Not able to run sql:[${GENERATED_SLA_SQL}]"
+# sed 's/^/                                              /' $PIPELINE_SQL_RESULT
+#else
+# print_log_info 1 INFO OVRALL_PIPE_STS "Successfully executed opswise report sql:[${GENERATED_SLA_SQL}]"
+#fi
+
+#MODIFY THE LOGIC TO GET LOOKBACK DAYS REPORT - PENDING
+EMAIL_DT=`date "+%F %H:%M UTC"`
+
+print_log_info 2 "Calucalate SLA  metrics"
+
+perc=$((100*$(cut -d, -f3 $PIPELINE_SQL_RESULT |grep SUCCESS|wc -l)/$(cat $PIPELINE_SQL_RESULT |wc -l)))
+pending_areas=`awk -F',' '$3!="SUCCESS" {print " "$1","}' $PIPELINE_SQL_RESULT |sed '$ s/.$//'|tr -d "\n"`
+sla_missed=`awk -F',' '$7=="DELAYED" {print " "$1","}' $PIPELINE_SQL_RESULT |sed '$ s/.$//'|tr -d "\n"`
+
+#perc=$((100*$(cut -d, -f3 /var/groupon/edwdevops/overall_pipeline/overall_pipeline.txt|grep SUCCESS|wc -l)/$(cat /var/groupon/edwdevops/overall_pipeline/overall_pipeline.txt|wc -l)))
+pipeline_dt=`date --date="yesterday" "+%F"`
+#pending_areas=`awk -F',' '$3!="SUCCESS" {print " "$1","}' /var/groupon/edwdevops/overall_pipeline/overall_pipeline.txt|sed '$ s/.$//'|tr -d "\n"`
+#sla_missed=`awk -F',' '$7=="DELAYED" {print " "$1","}' /var/groupon/edwdevops/overall_pipeline/overall_pipeline.txt|sed '$ s/.$//'|tr -d "\n"`
+DELAYED_BY=`awk -F',' '$7=="DELAYED" {print " "$6","}' /var/groupon/edwdevops/overall_pipeline/overall_pipeline.txt|sed '$ s/.$//'|tr -d "\n"`
+IS_SLA_DELAYED=1
+
+if [ -z "${pending_areas}" ]; then pending_areas="None"; fi
+if [ -z "${sla_missed}" ]; then sla_missed="None";IS_SLA_DELAYED=0 ; fi
+run_tm=`date '+%FT%TZ'`
+utc_time=`date -u`
+
+#Pipeline Metrics
+
+DONE_FILE_NAME=$DONE_FILE_PATH/pipeline_metrics_${pipeline_dt}.done
+pipline_metric_date=$(date --date="yesterday" "+%h %d")
+
+##CHECK PIPELINE HAS COMPLETED FOR THE DAY.
+if [[ $perc -eq 100 && ! -f $DONE_FILE_NAME ]] ; then
+
+actual_perc=$((100*($(cut -d, -f3 $PIPELINE_SQL_RESULT |grep SUCCESS |wc -l) - $(cat $PIPELINE_SQL_RESULT |grep DELAYED |wc -l)) / $(cat $PIPELINE_SQL_RESULT |grep SUCCESS |wc -l)))
+#actual_perc=$((100*($(cut -d, -f3 /var/groupon/edwdevops/overall_pipeline/overall_pipeline.txt|grep SUCCESS |wc -l) - $(cat /var/groupon/edwdevops/overall_pipeline/overall_pipeline.txt|grep DELAYED |wc -l)) / $(cat /var/groupon/edwdevops/overall_pipeline/overall_pipeline.txt|grep SUCCESS |wc -l)))
+ echo "${pipline_metric_date}|${actual_perc}|${sla_missed}" >$DONE_FILE_NAME
+
+#PUSH THE METRICS TO VIEWPOINT DB
+
+ETL_LOAD_KEY=$(echo $pipeline_dt | tr -d '-')
+ETL_LOAD_DATE="CURDATE() - INTERVAL 1 DAY"
+ETL_RUN_KEY=$(echo $EMAIL_DT |cut -d" " -f1|tr -d '-')
+ETL_RUN_DATE="CURDATE()"
+SLA_PERC=${actual_perc}
+SLA_MISSED_SUBJ=$(echo $sla_missed | tr -d ' ')
+DELAY_BY=$(echo $DELAYED_BY | tr -d ' ')
+
+echo "SET auto_increment_increment=1 ;
+INSERT INTO OPS_SLA_JOB_SUMMARY  (
+ETL_LOAD_KEY,
+ETL_LOAD_DATE,
+ETL_RUN_KEY,
+ETL_RUN_DATE,
+SLA_PERC,
+IS_SLA_DELAYED,
+SLA_MISSED_SUBJ,
+DELAYED_BY,
+SLA_DELAY_REASON
+)
+VALUES
+(
+$ETL_LOAD_KEY ,
+$ETL_LOAD_DATE ,
+$ETL_RUN_KEY ,
+$ETL_RUN_DATE ,
+$SLA_PERC ,
+$IS_SLA_DELAYED ,
+'$SLA_MISSED_SUBJ' ,
+'$DELAY_BY' ,
+'None'
+); "  >$SLA_ENTRY_SQL_FIL
+
+
+
+#MAKE AN ENTRY INTO VIEWPOINT TABLE.
+#BELOW MYSQL ID NEEDS TO BE CONFIGARABLE AT DB LEVEL - PENDING
+
+#MYSQLDB_ID=VIEWPOINT
+#MYSQL_DB_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+#MYSQLDB_HOST_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_HOST_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+#MYSQLDB_DB_USER=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DB_USER\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+#MYSQLDB_DBUSR_PASSWD=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DBUSR_PASSWD\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+
+# if ! mysql -u$MYSQLDB_DB_USER -p$MYSQLDB_DBUSR_PASSWD -D $MYSQL_DB_NAME -h $MYSQLDB_HOST_NAME -N <$SLA_ENTRY_SQL_FIL > $SLA_ENTRY_SQL_LOG 2>&1 ; then
+#   print_log_info 1 ERROR OVRALL_PIPE_STS "Not able to insert SLA entry into viewpoint DB: [${MYSQLDB_DB_USER}@${MYSQL_DB_NAME}."
+#   sed 's/^/                                              /' $SLA_ENTRY_SQL_LOG
+#   exit 1
+# else
+#   print_log_info 1 INFO OVRALL_PIPE_STS "Successfully inserted SLA metrics into audit table."
+# fi
+
+run_mysql_file VIEWPOINT $SLA_ENTRY_SQL_FIL summary
+
+#PREPARE DETAILED JOB ENTRY.
+>$SLA_ENTRY_SQL_FIL
+echo "SET auto_increment_increment=1 ;" >$SLA_ENTRY_SQL_FIL
+
+while read -r line
+do
+
+ETL_LOAD_KEY=$(echo $pipeline_dt | tr -d '-')
+ETL_LOAD_DATE="CURDATE() - INTERVAL 1 DAY"
+ETL_RUN_KEY=$(echo $EMAIL_DT |cut -d" " -f1|tr -d '-')
+ETL_RUN_DATE="CURDATE()"
+SUBJECT_AREA=$(echo $line|awk -F ',' ' { print $1 } ')
+JOB_NAME=$(echo $line|awk -F ',' ' { print $2 } ')
+STATUS_CODE=$(echo $line|awk -F ',' ' { print $3 } ')
+DELAYED_BY=$(echo $line|awk -F ',' ' { print $6 } ')
+DELAY_BY=$(echo $DELAYED_BY | tr -d ' ')
+
+echo "INSERT INTO OPS_SLA_JOB_DETAIL  (
+ETL_LOAD_KEY,
+ETL_LOAD_DATE,
+ETL_RUN_KEY,
+ETL_RUN_DATE,
+SUBJECT_AREA,
+JOB_NAME,
+STATUS_CODE,
+DELAYED_BY,
+DELAY_REASON_CODE,
+DELAY_REASON
+)
+VALUES
+(
+$ETL_LOAD_KEY ,
+$ETL_LOAD_DATE ,
+$ETL_RUN_KEY ,
+$ETL_RUN_DATE ,
+'$SUBJECT_AREA' ,
+'$JOB_NAME' ,
+'$STATUS_CODE' ,
+'$DELAY_BY' ,
+'None',
+'None'
+); "  >>$SLA_ENTRY_SQL_FIL
+
+done < $PIPELINE_SQL_RESULT
+
+#INSERT DETAILED JOB LEVEL DETAILS INTO AUDIT TABLE.
+run_mysql_file VIEWPOINT $SLA_ENTRY_SQL_FIL detail
+
+elif [[ $perc -eq 100 &&  -f $DONE_FILE_NAME ]] ; then
+ print_log_info 2 "Skipping SLA metrics insertion step as it loaded for the day."
+else
+ print_log_info 2 "Pipeline is not completed yet."
+fi
+
+
+print_log_info 2 "Generate html page."
+
+echo "From: ${EMAIL_FROM}
+To: ${EMAIL_TO}
+Subject: [EDW] Overall Pipeline Status: ${EMAIL_DT}
+MIME-Version: 1.0
+Content-Type: text/html
+Content-Disposition: inline
+<html><body>
+<p><a href="$VIEWPOINT_MSTR_PORT/overall_pipeline.html" target="_blank" style=\"color: #262626\">Overall Pipeline Status</a></p>" > $OVR_ALL_PLINE_HTML_EMAIL
+
+echo "<html><title>Overall Pipeline Status</title><head><link rel="icon" href="favicon.png"></head><body>
+<link rel="stylesheet" type="text/css" href="progress.css" >
+<meta http-equiv="refresh" content="900">
+<body bgcolor=white>
+<meta http-equiv="refresh" content="900">
+<h5 align="right" ; style=\"color:SLATEGRAY; font-size:10px ; margin: 0; padding: 0 ;\" ; <span style=font-weight:normal>
+<p  align="right" style="display:inline">[Last refresh: </p>
+<p style="display:inline" id="min_o"></p>
+<p style="display:inline"> min back @ ${utc_time}]
+</span>
+</h5>
+<br>EDW Pipeline Status for date ${pipeline_dt} - <b>${perc}% Completed</b></p>
+<p><b>Pending Loads</b>- ${pending_areas}</p>
+<p><b>SLAs missed</b>- ${sla_missed}</p>
+<script>
+var refresh_o = new Date('${run_tm}');
+var now_o = new Date();
+var diff_o = now_o - refresh_o;
+var diff_min_o = Math.round(diff_o / 60000);
+document.getElementById('min_o').innerHTML= diff_min_o;
+</script>" > $OVR_ALL_PLINE_HTML
+
+echo "<table border=2 cellpadding=3 cellspacing=2>
+<tr style="font-size:11px">
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>Subject</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>Job Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>Job Status</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>End Time</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>SLA</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>Delayed By</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#AED6F1><b>Delay Status</b></th>
+</tr>"|tee -a $OVR_ALL_PLINE_HTML $OVR_ALL_PLINE_HTML_EMAIL > /dev/null
+
+cat /var/groupon/edwdevops/overall_pipeline/overall_pipeline.txt|sed -e 's/$/<\/td><\/tr>/g' -e 's/^/<tr style="font-size:11px"><td align="center" style="white-space:nowrap;">/g' -e 's/,/<\/td><td align="center" style="white-space:nowrap;">/g'|tee -a $OVR_ALL_PLINE_HTML $OVR_ALL_PLINE_HTML_EMAIL > /dev/null
+
+echo "</table></body></html>"|tee -a $OVR_ALL_PLINE_HTML $OVR_ALL_PLINE_HTML_EMAIL > /dev/null
+
+sed -i -e 's/">DELAYED/color:#000000" bgcolor="#FE2E2E">DELAYED/g' $OVR_ALL_PLINE_HTML $OVR_ALL_PLINE_HTML_EMAIL
+sed -i -e 's/">NEAR DELAYED/color:#000000" bgcolor="#FF69B4">NEAR DELAYED/g' $OVR_ALL_PLINE_HTML $OVR_ALL_PLINE_HTML_EMAIL
+sed -i -e 's/">SUCCESS/color:#000000" bgcolor="#01DF01">SUCCESS/g' $OVR_ALL_PLINE_HTML $OVR_ALL_PLINE_HTML_EMAIL
+sed -i -e 's/"> FAILED/color:#000000" bgcolor="#FE2E2E">FAILED/g' $OVR_ALL_PLINE_HTML $OVR_ALL_PLINE_HTML_EMAIL
+sed -i -e 's/">ON-TIME/color:#000000" bgcolor="#01DF01">ON-TIME/g' $OVR_ALL_PLINE_HTML $OVR_ALL_PLINE_HTML_EMAIL
+sed -i -e 's/">RUNNING/color:#000000" bgcolor="#CCD1D1">RUNNING/g' $OVR_ALL_PLINE_HTML $OVR_ALL_PLINE_HTML_EMAIL
+sed -i -e 's/"> WAITING/color:#000000" bgcolor="#CCD1D1">WAITING/g' $OVR_ALL_PLINE_HTML $OVR_ALL_PLINE_HTML_EMAIL
+
+if [ -n "${email_list}" ]
+then
+ print_log_info 2 "Send pipeline status to : ${email_list}"
+ cat $OVR_ALL_PLINE_HTML_EMAIL|sendmail ${email_list}
+fi
+
+cp $OVR_ALL_PLINE_HTML /var/groupon/edwdevops/edw-dev-ops/archive/overall_pipeline/overall_pipeline_$(date +%F_%T).html
+
+#REMOVE TEMPORARY FILES AND UNSET ALL THE VARIABLES.
+

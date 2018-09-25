@@ -1,0 +1,49 @@
+#!/bin/bash
+mysql -hprod-pitstop-rw-vip.us.daas.grpn -uedw_user -pedw_password -Dedw </var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.sql|tr '\t' ,|tail -n +2 > /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.csv
+mysql -hprod-pitstop-rw-vip.us.daas.grpn -uedw_user -pedw_password -Dedw </var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop_2.sql|tr '\t' ,|tail -n +2|grep -v "NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL"|grep -v "SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS,SUCCESS" > /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop_2.csv
+
+max_hr=`cut -d, -f2 /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.csv|head -1`
+run_tm=`date '+%FT%TZ'`
+
+echo "<html><title>Gdoop Pipeline Status</title><head><link rel="icon" href="favicon.png"></head><body>
+<meta http-equiv="refresh" content="900">
+<p style="display:inline">(Last refresh: </p>
+<p style="display:inline" id="min_g"></p>
+<p style="display:inline"> min back)
+<br>GDOOP Pipeline Status- Load completed till <b>${max_hr}</b></p>
+<script>
+var refresh_g = new Date('${run_tm}');
+var now_g = new Date();
+var diff_g = now_g - refresh_g;
+var diff_min_g = Math.round(diff_g / 60000);
+document.getElementById('min_g').innerHTML= diff_min_g;
+</script>
+<h2>Status- by hour</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style="font-size:6px">
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>event_date</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>event_hour</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>bh_extract_na (=6)</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>bh_parse_na (=9)</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>bh_hive_load_na (=4)</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>bh_td_load_na (=8)</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>bh_extract_cd (=6)</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>bh_parse_cd (=10)</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>bh_hive_load_cd (=6)</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>bh_td_load_cd (=10)</b></th> 
+</tr>" > /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.html
+cat /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop_2.csv|sed -e 's/$/<\/td><\/tr>/g' -e 's/^/<tr style="font-size:6px"><td align="center" style="white-space:nowrap;">/g' -e 's/,/<\/td><td align="center" style="white-space:nowrap;">/g' >> /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.html
+echo "</table>" >> /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.html
+
+echo "<h2>Status- by name</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style="font-size:12px">
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>Event Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#C0C0C0><b>Consistent Before</b></th>
+</tr>" >> /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.html
+cat /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.csv|sed -e 's/$/<\/td><\/tr>/g' -e 's/^/<tr style="font-size:12px"><td align="center" style="white-space:nowrap;">/g' -e 's/,/<\/td><td align="center" style="white-space:nowrap;">/g' >> /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.html
+echo "</table></body></html>" >> /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.html
+
+
+sed -i -e 's/">SUCCESS/color:#000000" bgcolor="#01DF01">SUCCESS/g' /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.html
+cp /var/groupon/edwdevops/bh_mob_status_gdoop/bh_mob_status_gdoop.html /var/groupon/edwdevops/edw-dev-ops/archive/bh_mob_status_gdoop/bh_mob_status_gdoop_$(date +%F_%T).html

@@ -1,0 +1,13 @@
+Queue:private.edw_traffic_core
+svc_edw_prod,2603,3%,4,0
+Queue:private.edw_traffic_noncore
+svc_edw_prod,1001,7%,4,0
+Queue:private.pde_batch
+svc_janus,1201,56%,3,0
+Queue:private.pde
+svc_janus,2052,74%,56,0
+Queue:private.pde_dynamic_queries
+svc_janus,450,86%,3,0
+Queue:public
+svc_replicator_prod,70,2%,1,0
+svc_edw_prod,70,1%,1,0

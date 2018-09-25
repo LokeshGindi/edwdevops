@@ -1,0 +1,9 @@
+
+    .logon tdwd/warehouse1,B5da031237;
+    .set width 10000
+    .os rm -f /var/groupon/edwdevops/table_limits_eod/td_test.report
+    .export report file=/var/groupon/edwdevops/table_limits_eod/td_test.report
+    .set separator ','
+    .run file /var/groupon/edwdevops/table_limits_eod/td_test.sql
+    .export reset
+    .exit

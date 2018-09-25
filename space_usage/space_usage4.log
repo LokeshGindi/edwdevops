@@ -1,0 +1,4 @@
+webhdfs://gdoop-namenode-vip.snc1/user/grp_gdoop_edw_etl_prod,750TB,601TB,19%,SUCCESS
+webhdfs://gdoop-namenode-vip.snc1/user/grp_gdoop_edw_meg_prod,180TB,128TB,28%,SUCCESS
+webhdfs://gdoop-namenode-vip.snc1/user/grp_gdoop_edw_rep_prod,45TB,18TB,58%,SUCCESS
+webhdfs://cerebro-namenode-vip.snc1/user/grp_gdoop_edw_etl_prod,10TB,5TB,45%,SUCCESS

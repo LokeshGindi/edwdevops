@@ -1,0 +1,19 @@
+select cal.dt, cal.hr,
+case when nabhe.extract_count=6 then 'SUCCESS' else nabhe.extract_count end,
+case when nabhp.parse_count=9 then 'SUCCESS' else nabhp.parse_count end,
+case when nabhhl.hload_count=4 then 'SUCCESS' else nabhhl.hload_count end,
+case when nabhtdl.tdload_count=8 then 'SUCCESS' else nabhtdl.tdload_count end,
+case when cdbhe.extract_count=6 then 'SUCCESS' else cdbhe.extract_count end,
+case when cdbhp.parse_count=10 then 'SUCCESS' else cdbhp.parse_count end,
+case when cdbhhl.hload_count=6 then 'SUCCESS' else cdbhhl.hload_count end,
+case when cdbhtdl.tdload_count=10 then 'SUCCESS' else cdbhtdl.tdload_count end
+FROM (select dt,hr from(select current_date as dt union select CURRENT_DATE- interval 1 day as dt) dt_tbl join (select hr from tmp_hrs) hr_tbl) cal
+left outer join (SELECT event_date, event_hour, count(*) as extract_count FROM tracky_event_extract WHERE name not like '%cd%' and event_date >= CURRENT_DATE- interval 1 day and status='SUCCEEDED' group by 1,2) nabhe on nabhe.event_date=cal.dt and nabhe.event_hour=cal.hr
+left outer join (SELECT event_date, event_hour, count(*) as parse_count FROM tracky_event_parser WHERE name not like '%cd%' and event_date >= CURRENT_DATE- interval 1 day and status='SUCCEEDED' group by 1,2) as nabhp on nabhp.event_date=cal.dt and nabhp.event_hour=cal.hr
+left outer join (SELECT event_date, event_hour, count(*) as hload_count FROM bloodhound_clickstream_funnel WHERE name not like '%cd%' and event_date >= CURRENT_DATE- interval 1 day and status='SUCCEEDED' group by 1,2) as nabhhl on nabhhl.event_date=cal.dt and nabhhl.event_hour=cal.hr
+left outer join (SELECT event_date, event_hour, count(*) as tdload_count FROM bloodhound_clickstream_funnel_load WHERE name not like '%cd%' and event_date >= CURRENT_DATE- interval 1 day and status='SUCCEEDED' group by 1,2) as nabhtdl on nabhtdl.event_date=cal.dt and nabhtdl.event_hour=cal.hr
+left outer join (SELECT event_date, event_hour, count(*) as extract_count FROM tracky_event_extract WHERE name like '%cd%' and event_date >= CURRENT_DATE- interval 1 day and status='SUCCEEDED' group by 1,2) cdbhe on cdbhe.event_date=cal.dt and cdbhe.event_hour=cal.hr
+left outer join (SELECT event_date, event_hour, count(*) as parse_count FROM tracky_event_parser WHERE name like '%cd%' and event_date >= CURRENT_DATE- interval 1 day and status='SUCCEEDED' group by 1,2) as cdbhp on cdbhp.event_date=cal.dt and cdbhp.event_hour=cal.hr
+left outer join (SELECT event_date, event_hour, count(*) as hload_count FROM bloodhound_clickstream_funnel WHERE name like '%cd%' and event_date >= CURRENT_DATE- interval 1 day and status='SUCCEEDED' group by 1,2) as cdbhhl on cdbhhl.event_date=cal.dt and cdbhhl.event_hour=cal.hr
+left outer join (SELECT event_date, event_hour, count(*) as tdload_count FROM bloodhound_clickstream_funnel_load WHERE name like '%cd%' and event_date >= CURRENT_DATE- interval 1 day and status='SUCCEEDED' group by 1,2) as cdbhtdl on cdbhtdl.event_date=cal.dt and cdbhtdl.event_hour=cal.hr
+order by 1,2;

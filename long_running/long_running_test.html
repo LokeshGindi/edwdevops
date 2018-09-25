@@ -1,0 +1,83 @@
+<html><title>Long Running Jobs</title><head><link rel=icon href=favicon.png></head><body>
+<body bgcolor=white>
+<meta http-equiv=refresh content=900>
+<h5 align=right ; style="color:SLATEGRAY; font-size:10px ; margin: 0; padding: 0 ;" ; <span style=font-weight:normal>
+<p style=display:inline>[Last refresh: </p>
+<p style=display:inline id=min_l></p>
+<p style=display:inline> min back @ Mon Jul 16 09:34:05 UTC 2018]
+</span>
+</h5>
+<br>Long Running Opswise Job Count :  <b>3</b>
+<br>Long Running Hadoop Job Count : <b>16</b></p>
+<script>
+var refresh_l = new Date('2018-07-16T09:34:05Z');
+var now_l = new Date();
+var diff_l = now_l - refresh_l;
+var diff_min_l = Math.round(diff_l / 60000);
+document.getElementById('min_l').innerHTML= diff_min_l;
+</script>
+
+<h2>Long Running Opswise Jobs</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style=font-size:10px>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Type</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Trigger Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Run Duration</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Avg Dur</b></th>
+</tr>
+<tr style="font-size:10px" bgcolor="#FFFFFF"><td align="left" style="white-space:nowrap;">CHECK_EOD_DIM_OFFER_PRODUCT</td><td align="left" style="white-space:nowrap;">UNIX</td><td align="left" style="white-space:nowrap;">Workflow: WKLY_OGP_EST_REFUNDS_${varRUNDATE}</td><td align="left" style="white-space:nowrap;">09:33</td><td align="left" style="white-space:nowrap;">07:40</td></tr>
+<tr style="font-size:10px" bgcolor="#FFFFFF"><td align="left" style="white-space:nowrap;">CHECK_EOD_DIM_OFFER_PRODUCT</td><td align="left" style="white-space:nowrap;">UNIX</td><td align="left" style="white-space:nowrap;">Workflow: DLY_OGP_FINANCIAL_${varRUNDATE}</td><td align="left" style="white-space:nowrap;">06:33</td><td align="left" style="white-space:nowrap;">05:21</td></tr>
+<tr style="font-size:10px" bgcolor="#FFFFFF"><td align="left" style="white-space:nowrap;">eucp_tl_check_deal_contract_map$</td><td align="left" style="white-space:nowrap;">UNIX</td><td align="left" style="white-space:nowrap;">Workflow: EUREBRO_COPY_WF3_${varRUNDATE}</td><td align="left" style="white-space:nowrap;">05:33</td><td align="left" style="white-space:nowrap;">02:36</td></tr>
+</table>
+<h2>Gdoop Queue Status</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style=font-size:10px>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>User Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Total Resource</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Used %</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Running Apps</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Waiting Apps</b></th>
+</tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:private.edw_traffic_noncore</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_edw_prod</td><td align="left" style="white-space:nowrap;">1001</td><td align="left" style="white-space:nowrap;">0%</td><td align="left" style="white-space:nowrap;">1</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:private.edw_traffic_core</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_edw_prod</td><td align="left" style="white-space:nowrap;">2603</td><td align="left" style="white-space:nowrap;">0%</td><td align="left" style="white-space:nowrap;">1</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:private.pde_batch</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_janus</td><td align="left" style="white-space:nowrap;">1201</td><td align="left" style="white-space:nowrap;">39%</td><td align="left" style="white-space:nowrap;">2</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:private.pde</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_janus</td><td align="left" style="white-space:nowrap;">2052</td><td align="left" style="white-space:nowrap;">76%</td><td align="left" style="white-space:nowrap;">57</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:private.pde_dynamic_queries</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_janus</td><td align="left" style="white-space:nowrap;">450</td><td align="left" style="white-space:nowrap;">86%</td><td align="left" style="white-space:nowrap;">3</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:public</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_replicator_prod</td><td align="left" style="white-space:nowrap;">70</td><td align="left" style="white-space:nowrap;">58%</td><td align="left" style="white-space:nowrap;">1</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_janus</td><td align="left" style="white-space:nowrap;">70</td><td align="left" style="white-space:nowrap;">82%</td><td align="left" style="white-space:nowrap;">1</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_meg_prod</td><td align="left" style="white-space:nowrap;">70</td><td align="left" style="white-space:nowrap;">2%</td><td align="left" style="white-space:nowrap;">2</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_edw_prod</td><td align="left" style="white-space:nowrap;">70</td><td align="left" style="white-space:nowrap;">101%</td><td align="left" style="white-space:nowrap;">2</td><td align="left" style="white-space:nowrap;">0</td></tr>
+</table>
+<h2>Long Running Hadoop Jobs (Run Duration > 30 min)</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style=font-size:10px>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job ID</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Name Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Host</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Queue</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Run Duration</b></th>
+</tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_GDOOP}/cluster/app/application_1530661673092_139148>application_1530661673092_139148</a></td><td align="left" style="white-space:nowrap;">select CONCAT(max(cast(id as i</td><td align="left" style="white-space:nowrap;">Gdoop</td><td align="left" style="white-space:nowrap;"> '...1(Stage-1)</td><td align="left" style="white-space:nowrap;">425481:34</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_GDOOP}/cluster/app/application_1530661673092_136280>application_1530661673092_136280</a></td><td align="left" style="white-space:nowrap;">parse_bh_impression</td><td align="left" style="white-space:nowrap;">Gdoop</td><td align="left" style="white-space:nowrap;">edw_traffic_noncore</td><td align="left" style="white-space:nowrap;">5:53</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890003>job_201708251717_4890003</a></td><td align="left" style="white-space:nowrap;">source_extract/sqoop_extract-2</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">default</td><td align="left" style="white-space:nowrap;">2:32</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134132>application_1530656550018_134132</a></td><td align="left" style="white-space:nowrap;">distcp</td><td align="left" style="white-space:nowrap;">Cerebro</td><td align="left" style="white-space:nowrap;">edw_core</td><td align="left" style="white-space:nowrap;">2:7</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890714>job_201708251717_4890714</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:54</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890720>job_201708251717_4890720</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:53</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890750>job_201708251717_4890750</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:49</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890772>job_201708251717_4890772</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:45</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890776>job_201708251717_4890776</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:45</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890777>job_201708251717_4890777</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:45</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890795>job_201708251717_4890795</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:39</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890798>job_201708251717_4890798</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:38</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890824>job_201708251717_4890824</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:34</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890828>job_201708251717_4890828</a></td><td align="left" style="white-space:nowrap;">8INlsZdvfO/sqoop_table-407e8cf</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">default</td><td align="left" style="white-space:nowrap;">0:33</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890843>job_201708251717_4890843</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:33</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890860>job_201708251717_4890860</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:31</td></tr>
+</table></body></html>

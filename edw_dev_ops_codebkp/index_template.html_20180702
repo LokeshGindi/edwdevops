@@ -1,0 +1,181 @@
+<html>
+<title>VIEWPOINT- EDW-DEV-OPS</title>
+<head><link rel="icon" href="favicon.png"></head>
+<link rel="stylesheet" type="text/css" href="style.css" >
+<body bgcolor="#53a318">
+<meta http-equiv="refresh" content="900">
+<font color="#000000" style="font-family:calibri;font-size:12px;">
+
+
+<style type="text/css">
+html, body{width: 100%; height: 100%; padding: 0; margin: 0 auto;}
+div{position: absolute; padding: 1em; border: 1px solid #53a318}
+#aa{background: #53a318; top: 0.001%; left: 0%; right: 0%; bottom: 95%; font-family:Sans-serif; color:black; padding:0%; }
+#ab{background: #ffffff; top: 5%; left: 0%; right: 67%; bottom: 1%; font-family:Sans-serif; color:black;}
+#ae{background: #ffffff; top: 5%; left: 67%; right: 0%; bottom: 42% ; font-family:Sans-serif; color:black;}
+#ad{background: #ffffff; top: 58%; left: 33%; right: 33%; bottom: 1%; font-family:Sans-serif; color:black;}
+#af{background: #ffffff; top: 58%; left: 67%; right: 0%; bottom: 1% ; font-family:Sans-serif; color:black;}
+#ac{background: #ffffff; top: 5%; left: 33%; right: 33%; bottom: 42% ; font-family:Sans-serif; color:black;}
+</style>
+
+<style>
+h3 { color:#1B4F72 ; 
+     font-family: Times ;
+     background-color: #e5efe9 ;
+     } 
+</style>
+
+
+
+<div id="aa">
+<h2 align="center" style="color:white; margin: 0; padding: 2px ;top: -1em">EDW DEV OPS- VIEWPOINT</h2>
+<h5  align="right" style="color:white; margin: 0px; padding: -400px ; " >
+<iframe src="https://freesecure.timeanddate.com/clock/i65yhc6v/fn2/fs9/fcfff/tc53a318/ahr/avb/tt0/tw1/tm1/td2/th1/ta1/tb2" frameborder="0" width="164" height="15"></iframe>
+</h5>
+</div>
+
+<div id="ab">
+<h3 align="center">EDW Pipeline Status</h3>
+<p style="margin: 0; padding: 0"><a  href="overall_pipeline.html" target="_blank" style="  style="color: #262626"  >Overall Pipeline Status </a></p>
+extvar01
+<p style="margin: 0; padding: 0"><a href="eod_table_limits.html" target="_blank">View Table Limits Status </a></p>
+extvar03
+<p style="margin: 0; padding: 0"><a href="bh_mob_status_gdoop.html" target="_blank">Hourly BH/Mobile Status </a></p>
+extvar02
+</br>
+<p style="margin: 0; padding: 0"><a href="viewpoint_history.html" target="_blank">Viewpoint History</a></p>
+</br>
+<h4 align="left" ; style="color:#1B4F72" ;>Pipeline SLA trend</h4>
+<p> Last week overall pipeline SLA completion: <b>wkly_sla_perc%</b></p>
+<style>#canvas{background: #ffffff;
+        box-shadow:0px 0px 0px #ffffff;
+        border:0px solid #ffffff;
+        margin-bottom:1px;}</style> 
+<script type="text/javascript">
+
+var canvas ;
+var context ;
+var Val_Max;
+var Val_Min;
+var sections;
+var xScale;
+var yScale;
+var y;
+        // values of each item on the graph
+var itemName = [ date_range ] ; 
+var itemValue = [ sla_values ];
+//var itemName = [ "Mar 31", "Mar 30", "Mar 29", "Mar 28" , "Mar 27", "Mar 26" ,"Mar 25"];
+//var itemValue = [ 100, 90, 100, 80, 70,50,100 ];
+
+function init() {
+        // intialize values for each variables
+    sections = 7;
+    Val_Max = 100;
+    var stepSize = 10;
+    var columnSize = 50;
+    var rowSize = 10;
+    var margin = 10;
+    var header = "SLA %" 
+        //
+        
+    canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d");
+    context.fillStyle = "#53a318;"
+    
+    yScale = (canvas.height - columnSize - margin) / (Val_Max);
+    xScale = (canvas.width - rowSize) / (sections + 1);
+    
+    context.strokeStyle="#53a318;"; // background black lines
+    context.beginPath();
+        // column names 
+    context.font = "19 pt Arial;"
+    context.fillText(header, 0,columnSize - margin);
+        // draw lines in the background
+    context.font = "16 pt Helvetica"
+    var count =  0;
+    for (scale=Val_Max;scale>=0;scale = scale - stepSize) {
+        y = columnSize + (yScale * count * stepSize); 
+        context.fillText(scale, margin,y + margin);
+        context.moveTo(rowSize,y)
+        context.lineTo(canvas.width,y)
+        count++;
+    }
+    context.stroke();
+    
+        // print names of each data entry
+    context.font = "20 pt Verdana";
+    context.textBaseline="bottom";
+    for (i=0;i<7;i++) {
+        computeHeight(itemValue[i]);
+        context.fillText(itemName[i], xScale * (i+1),y - margin);
+    }
+    
+        // shadow for graph's bar lines with color and offset
+  
+    context.fillStyle="#53a318";
+  context.shadowColor = '#53a318';
+  
+  //shadow offset along X and Y direction 
+    context.shadowOffsetX = 5;
+    context.shadowOffsetY = 1;
+  
+        // translate to bottom of graph  inorder to match the data 
+  context.translate(0,canvas.height - margin);
+    context.scale(xScale,-1 * yScale);
+  
+        // draw each graph bars 
+    for (i=0;i<7;i++) {
+        context.fillRect(i+1, 0, 0.2, itemValue[i]);
+    }
+}
+
+function computeHeight(value) {
+    y = canvas.height - value * yScale ;    
+}
+
+</script>
+
+<body onLoad="init()">
+
+<canvas id="canvas" height="250" width="350">
+</canvas>
+
+</body>
+</div>
+
+<div id="ac">
+<h3 align="center">System Health</h3>
+<p style="margin: 0; padding: 0"><a href="space_usage.html" target="_blank">Space Usage </a></p>
+extvar06
+extvar07
+</div>
+
+<div id="ad">
+<h3 align="center">ETL Job Metrics</h3>
+<p style="margin: 0; padding: 0"><a href="long_running.html" target="_blank">Long Running Jobs </a></p>
+extvar05
+<p><a href="archive.html" target="_blank">Long Running Jobs History </a></p>
+<p><a href="ops_stats.html" target="_blank">Opswise Weekly Stats </a></p>
+</div>
+
+<div id="ae">
+<h3 align="center">Open Tickets</h3>
+<p><a href="https://groupon.pagerduty.com/services/PUT2G05" target="_blank">Open Pager Incidents </a></p>
+<p><a href="https://goo.gl/15C5AZ" target="_blank">Open Jira Tickets </a></p>
+</div>
+
+<div id="af">
+<h3 align="center">References</h3>
+<p><a href="https://wiki.groupondev.com/Megatron_Run_Book" target="_blank">Megatron Runbook </a></p>
+<p><a href="https://goo.gl/hfwzGn" target="_blank">Janus Runbook </a></p>
+<p><a href="https://goo.gl/KN8Qrn" target="_blank">EDW Runbook </a></p>
+<p><a href="https://goo.gl/iV77zZ" target="_blank">Dev-Ops Reference</a></p>
+<p><a href="https://goo.gl/KoL2u4" target="_blank">Oncall Roatation</a></p>
+<p><a href="https://goo.gl/E4fLPx" target="_blank">Release Issues</a></p>
+</div>
+
+
+
+</font>
+</body>
+</html>

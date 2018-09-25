@@ -1,0 +1,9 @@
+
+    .logon tdwc/warehouse1,cf52d640fa;
+    .set width 10000
+    .os rm -f /var/groupon/edwdevops/table_limits_eod/intl_dash_tdwc.report
+    .export report file=/var/groupon/edwdevops/table_limits_eod/intl_dash_tdwc.report
+    .set separator ','
+    .run file /var/groupon/edwdevops/table_limits_eod/intl_dash_tdwc.sql
+    .export reset
+    .exit

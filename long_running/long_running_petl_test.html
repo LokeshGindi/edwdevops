@@ -1,0 +1,1350 @@
+<html><head><title>pit-prod-etljob1 Fair Scheduler Administration</title>
+<link rel="stylesheet" type="text/css" href="/static/hadoop.css">
+</head><body>
+<h1><a href="/jobtracker.jsp">pit-prod-etljob1</a> Fair Scheduler Administration</h1>
+<h2>Pools</h2>
+<table border="2" cellpadding="5" cellspacing="2">
+<tr><th rowspan=2>Pool</th><th rowspan=2>Running Jobs</th><th colspan=4>Map Tasks</th><th colspan=4>Reduce Tasks</th><th rowspan=2>Scheduling Mode</th></tr>
+<tr><th>Min Share</th><th>Max Share</th><th>Running</th><th>Fair Share</th><th>Min Share</th><th>Max Share</th><th>Running</th><th>Fair Share</th></tr>
+<tr><td>kafkaconsumer</td><td>1</td><td>55</td><td>-</td><td>422</td><td>625.0</td><td>0</td><td>-</td><td>0</td><td>0.0</td><td>FAIR</td></tr>
+<tr><td>p0</td><td>0</td><td>35</td><td>35</td><td>0</td><td>0.0</td><td>15</td><td>15</td><td>0</td><td>0.0</td><td>FAIR</td></tr>
+<tr><td>p1</td><td>0</td><td>15</td><td>-</td><td>0</td><td>0.0</td><td>5</td><td>-</td><td>0</td><td>0.0</td><td>FAIR</td></tr>
+<tr><td>p2</td><td>1</td><td>45</td><td>-</td><td>0</td><td>0.0</td><td>26</td><td>-</td><td>147</td><td>147.0</td><td>FAIR</td></tr>
+<tr><td>p3</td><td>0</td><td>230</td><td>-</td><td>0</td><td>0.0</td><td>40</td><td>-</td><td>0</td><td>0.0</td><td>FAIR</td></tr>
+<tr><td>p4</td><td>5</td><td>295</td><td>-</td><td>13</td><td>14.0</td><td>44</td><td>-</td><td>16</td><td>33.0</td><td>FAIR</td></tr>
+<tr><td>p5</td><td>35</td><td>210</td><td>-</td><td>59</td><td>155.0</td><td>160</td><td>-</td><td>247</td><td>230.0</td><td>FAIR</td></tr>
+<tr><td>po</td><td>0</td><td>0</td><td>-</td><td>0</td><td>0.0</td><td>0</td><td>-</td><td>0</td><td>0.0</td><td>FIFO</td></tr>
+<tr><td>default</td><td>10</td><td>815</td><td>-</td><td>31</td><td>31.0</td><td>280</td><td>-</td><td>255</td><td>257.0</td><td>FAIR</td></tr>
+</table>
+<h2>Running Jobs</h2>
+<table border="2" cellpadding="5" cellspacing="2">
+<tr><th rowspan=2>Submitted</th><th rowspan=2>JobID</th><th rowspan=2>User</th><th rowspan=2>Name</th><th rowspan=2>Pool</th><th rowspan=2>Priority</th><th colspan=3>Map Tasks</th><th colspan=3>Reduce Tasks</th></tr><tr>
+<th>Finished</th><th>Running</th><th>Fair Share</th><th>Finished</th><th>Running</th><th>Fair Share</th></tr>
+<tr>
+<td>Jul 16, 07:02</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890003">job_201708251717_4890003</a></td><td>etl_adhoc</td>
+<td>source_extract/sqoop_extract-237bbc9f32f43ae663d5ca01f13a631220180715</td>
+<td><select id="select2560524" name="select2560524" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890003'.replace('<CHOICE>', document.getElementById('select2560524').value);">
+<option value="default" selected>default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560525" name="select2560525" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890003'.replace('<CHOICE>', document.getElementById('select2560525').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>3 / 4</td><td>1</td><td>1.0</td>
+<td>0 / 0</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 08:40</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890714">job_201708251717_4890714</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_orders_final_snc1.orders_imp_merge_2018-07-16-08-35-01</td>
+<td><select id="select2560526" name="select2560526" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890714'.replace('<CHOICE>', document.getElementById('select2560526').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560527" name="select2560527" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890714'.replace('<CHOICE>', document.getElementById('select2560527').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>1083 / 1083</td><td>0</td><td>0.0</td>
+<td>255 / 257</td><td>2</td><td>2.0</td>
+<tr>
+<td>Jul 16, 08:41</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890720">job_201708251717_4890720</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_request_details_final_snc1.orders_imp_merge_2018-07-16-08-35-01</td>
+<td><select id="select2560528" name="select2560528" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890720'.replace('<CHOICE>', document.getElementById('select2560528').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560529" name="select2560529" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890720'.replace('<CHOICE>', document.getElementById('select2560529').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>3701 / 3701</td><td>0</td><td>0.0</td>
+<td>443 / 992</td><td>15</td><td>22.6</td>
+<tr>
+<td>Jul 16, 08:45</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890750">job_201708251717_4890750</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_payment_transactions_final_lup1.orders_imp_merge_2018-07-16-08-40-01</td>
+<td><select id="select2560530" name="select2560530" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890750'.replace('<CHOICE>', document.getElementById('select2560530').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560531" name="select2560531" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890750'.replace('<CHOICE>', document.getElementById('select2560531').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>757 / 757</td><td>0</td><td>0.0</td>
+<td>158 / 163</td><td>5</td><td>5.0</td>
+<tr>
+<td>Jul 16, 08:49</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890772">job_201708251717_4890772</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_request_details_raw_final_snc1.orders_hive_only_merge_2018-07-16-08-43-02</td>
+<td><select id="select2560532" name="select2560532" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890772'.replace('<CHOICE>', document.getElementById('select2560532').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560533" name="select2560533" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890772'.replace('<CHOICE>', document.getElementById('select2560533').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>3051 / 3051</td><td>0</td><td>0.0</td>
+<td>222 / 818</td><td>14</td><td>22.6</td>
+<tr>
+<td>Jul 16, 08:49</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890776">job_201708251717_4890776</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_fulfillment_states_final_lup1.orders_prod_merge_2018-07-16-08-20-01</td>
+<td><select id="select2560534" name="select2560534" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890776'.replace('<CHOICE>', document.getElementById('select2560534').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560535" name="select2560535" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890776'.replace('<CHOICE>', document.getElementById('select2560535').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>39 / 39</td><td>0</td><td>0.0</td>
+<td>0 / 2</td><td>2</td><td>2.0</td>
+<tr>
+<td>Jul 16, 08:49</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890777">job_201708251717_4890777</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_payment_messages_final_lup1.orders_prod_merge_2018-07-16-08-20-01</td>
+<td><select id="select2560536" name="select2560536" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890777'.replace('<CHOICE>', document.getElementById('select2560536').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560537" name="select2560537" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890777'.replace('<CHOICE>', document.getElementById('select2560537').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>685 / 685</td><td>0</td><td>0.0</td>
+<td>116 / 173</td><td>42</td><td>22.6</td>
+<tr>
+<td>Jul 16, 08:55</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890795">job_201708251717_4890795</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_parent_orders_final_snc1.orders_imp_merge_2018-07-16-08-35-01</td>
+<td><select id="select2560538" name="select2560538" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890795'.replace('<CHOICE>', document.getElementById('select2560538').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560539" name="select2560539" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890795'.replace('<CHOICE>', document.getElementById('select2560539').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>587 / 587</td><td>0</td><td>0.0</td>
+<td>63 / 119</td><td>20</td><td>22.6</td>
+<tr>
+<td>Jul 16, 08:56</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890798">job_201708251717_4890798</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_collection_transactions_final_snc1.orders_prod_merge_2018-07-16-08-05-01</td>
+<td><select id="select2560540" name="select2560540" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890798'.replace('<CHOICE>', document.getElementById('select2560540').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560541" name="select2560541" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890798'.replace('<CHOICE>', document.getElementById('select2560541').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>364 / 364</td><td>0</td><td>0.0</td>
+<td>9 / 86</td><td>74</td><td>22.6</td>
+<tr>
+<td>Jul 16, 09:00</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890824">job_201708251717_4890824</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_exchange_mappings_final_snc1.orders_prod_merge_2018-07-16-08-05-01</td>
+<td><select id="select2560542" name="select2560542" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890824'.replace('<CHOICE>', document.getElementById('select2560542').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560543" name="select2560543" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890824'.replace('<CHOICE>', document.getElementById('select2560543').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>28 / 28</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>1</td><td>1.0</td>
+<tr>
+<td>Jul 16, 09:01</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890828">job_201708251717_4890828</a></td><td>etl_adhoc</td>
+<td>8INlsZdvfO/sqoop_table-407e8cf7-8f25-44ab-9287-bf551cbdac5c</td>
+<td><select id="select2560544" name="select2560544" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890828'.replace('<CHOICE>', document.getElementById('select2560544').value);">
+<option value="default" selected>default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560545" name="select2560545" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890828'.replace('<CHOICE>', document.getElementById('select2560545').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 1</td><td>1</td><td>1.0</td>
+<td>0 / 0</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:01</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890843">job_201708251717_4890843</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_fulfillments_final_lup1.orders_prod_merge_2018-07-16-08-20-01</td>
+<td><select id="select2560546" name="select2560546" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890843'.replace('<CHOICE>', document.getElementById('select2560546').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560547" name="select2560547" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890843'.replace('<CHOICE>', document.getElementById('select2560547').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>60 / 60</td><td>0</td><td>0.0</td>
+<td>0 / 6</td><td>6</td><td>6.0</td>
+<tr>
+<td>Jul 16, 09:03</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890860">job_201708251717_4890860</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_gift_instructions_final_snc1.orders_imp_merge_2018-07-16-08-35-01</td>
+<td><select id="select2560548" name="select2560548" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890860'.replace('<CHOICE>', document.getElementById('select2560548').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560549" name="select2560549" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890860'.replace('<CHOICE>', document.getElementById('select2560549').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>177 / 178</td><td>1</td><td>1.0</td>
+<td>0 / 9</td><td>9</td><td>9.0</td>
+<tr>
+<td>Jul 16, 09:07</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890887">job_201708251717_4890887</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_campaign_memberships_final_snc1.orders_prod_merge_2018-07-16-08-05-01</td>
+<td><select id="select2560550" name="select2560550" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890887'.replace('<CHOICE>', document.getElementById('select2560550').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560551" name="select2560551" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890887'.replace('<CHOICE>', document.getElementById('select2560551').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>373 / 373</td><td>0</td><td>0.0</td>
+<td>0 / 85</td><td>14</td><td>22.6</td>
+<tr>
+<td>Jul 16, 09:12</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890909">job_201708251717_4890909</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_item_unit_events_final_snc1.orders_imp_merge_2018-07-16-08-35-01</td>
+<td><select id="select2560552" name="select2560552" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890909'.replace('<CHOICE>', document.getElementById('select2560552').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560553" name="select2560553" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890909'.replace('<CHOICE>', document.getElementById('select2560553').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>322 / 322</td><td>0</td><td>0.0</td>
+<td>0 / 42</td><td>14</td><td>22.6</td>
+<tr>
+<td>Jul 16, 09:12</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890910">job_201708251717_4890910</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_point_transactions_final_snc1.orders_imp_merge_2018-07-16-08-35-01</td>
+<td><select id="select2560554" name="select2560554" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890910'.replace('<CHOICE>', document.getElementById('select2560554').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560555" name="select2560555" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890910'.replace('<CHOICE>', document.getElementById('select2560555').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>127 / 127</td><td>0</td><td>0.0</td>
+<td>0 / 24</td><td>14</td><td>22.6</td>
+<tr>
+<td>Jul 16, 09:15</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890924">job_201708251717_4890924</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_audit_records_final_snc1.orders_prod_merge_2018-07-16-08-05-01</td>
+<td><select id="select2560556" name="select2560556" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890924'.replace('<CHOICE>', document.getElementById('select2560556').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560557" name="select2560557" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890924'.replace('<CHOICE>', document.getElementById('select2560557').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>159 / 159</td><td>0</td><td>0.0</td>
+<td>0 / 27</td><td>13</td><td>22.6</td>
+<tr>
+<td>Jul 16, 09:16</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890934">job_201708251717_4890934</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_item_unit_events_final_snc1.orders_imp_load_2018-07-16-08-15-02</td>
+<td><select id="select2560558" name="select2560558" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890934'.replace('<CHOICE>', document.getElementById('select2560558').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560559" name="select2560559" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890934'.replace('<CHOICE>', document.getElementById('select2560559').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>138 / 138</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>1</td><td>1.0</td>
+<tr>
+<td>Jul 16, 09:17</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890944">job_201708251717_4890944</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_bucks_payment_transactions_final_snc1.orders_imp_load_2018-07-16-09-15-01</td>
+<td><select id="select2560560" name="select2560560" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890944'.replace('<CHOICE>', document.getElementById('select2560560').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560561" name="select2560561" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890944'.replace('<CHOICE>', document.getElementById('select2560561').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>21 / 22</td><td>1</td><td>1.0</td>
+<td>0 / 1</td><td>1</td><td>1.0</td>
+<tr>
+<td>Jul 16, 09:18</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890946">job_201708251717_4890946</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_bucks_payments_final_lup1.orders_prod_merge_2018-07-16-08-20-01</td>
+<td><select id="select2560562" name="select2560562" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890946'.replace('<CHOICE>', document.getElementById('select2560562').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560563" name="select2560563" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890946'.replace('<CHOICE>', document.getElementById('select2560563').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>42 / 52</td><td>10</td><td>10.0</td>
+<td>0 / 4</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:18</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890948">job_201708251717_4890948</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_item_adjustment_events_final_snc1.orders_imp_load_2018-07-16-09-15-01</td>
+<td><select id="select2560564" name="select2560564" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890948'.replace('<CHOICE>', document.getElementById('select2560564').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560565" name="select2560565" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890948'.replace('<CHOICE>', document.getElementById('select2560565').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 132</td><td>37</td><td>132.0</td>
+<td>0 / 1</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:19</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890949">job_201708251717_4890949</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_item_units_final_snc1.orders_imp_load_2018-07-16-09-15-01</td>
+<td><select id="select2560566" name="select2560566" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890949'.replace('<CHOICE>', document.getElementById('select2560566').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560567" name="select2560567" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890949'.replace('<CHOICE>', document.getElementById('select2560567').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 136</td><td>0</td><td>0.0</td>
+<td>0 / 2</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:19</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890950">job_201708251717_4890950</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_item_adjustments_final_snc1.orders_imp_load_2018-07-16-09-15-01</td>
+<td><select id="select2560568" name="select2560568" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890950'.replace('<CHOICE>', document.getElementById('select2560568').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560569" name="select2560569" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890950'.replace('<CHOICE>', document.getElementById('select2560569').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 130</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:18</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890951">job_201708251717_4890951</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_deal_option_tax_attributes_final_snc1.orders_prod_merge_2018-07-16-08-05-01</td>
+<td><select id="select2560570" name="select2560570" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890951'.replace('<CHOICE>', document.getElementById('select2560570').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560571" name="select2560571" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890951'.replace('<CHOICE>', document.getElementById('select2560571').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>22 / 32</td><td>10</td><td>11.0</td>
+<td>0 / 1</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:20</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890967">job_201708251717_4890967</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_campaign_membership_pledges_final_snc1.orders_prod_merge_2018-07-16-08-05-01</td>
+<td><select id="select2560572" name="select2560572" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890967'.replace('<CHOICE>', document.getElementById('select2560572').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560573" name="select2560573" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890967'.replace('<CHOICE>', document.getElementById('select2560573').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 251</td><td>0</td><td>0.0</td>
+<td>0 / 51</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:22</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890980">job_201708251717_4890980</a></td><td>etl_adhoc</td>
+<td>insert_subscriptions_tmp_[2]_20180716080003</td>
+<td><select id="select2560574" name="select2560574" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890980'.replace('<CHOICE>', document.getElementById('select2560574').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2" selected>p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560575" name="select2560575" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890980'.replace('<CHOICE>', document.getElementById('select2560575').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>1178 / 1178</td><td>0</td><td>0.0</td>
+<td>0 / 147</td><td>147</td><td>147.0</td>
+<tr>
+<td>Jul 16, 09:25</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890991">job_201708251717_4890991</a></td><td>etl_adhoc</td>
+<td>insert_billing_attributes_tmp_[2]_20180716080005</td>
+<td><select id="select2560576" name="select2560576" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890991'.replace('<CHOICE>', document.getElementById('select2560576').value);">
+<option value="default" selected>default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560577" name="select2560577" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890991'.replace('<CHOICE>', document.getElementById('select2560577').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>2069 / 2088</td><td>19</td><td>19.0</td>
+<td>0 / 50</td><td>50</td><td>50.0</td>
+<tr>
+<td>Jul 16, 09:27</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890993">job_201708251717_4890993</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_item_adjustments_final_lup1.orders_imp_load_2018-07-16-09-20-01</td>
+<td><select id="select2560578" name="select2560578" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890993'.replace('<CHOICE>', document.getElementById('select2560578').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560579" name="select2560579" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890993'.replace('<CHOICE>', document.getElementById('select2560579').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 134</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:26</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890994">job_201708251717_4890994</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_item_units_final_lup1.orders_imp_load_2018-07-16-09-20-01</td>
+<td><select id="select2560580" name="select2560580" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890994'.replace('<CHOICE>', document.getElementById('select2560580').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560581" name="select2560581" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890994'.replace('<CHOICE>', document.getElementById('select2560581').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 132</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:26</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890995">job_201708251717_4890995</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_parent_orders_final_lup1.orders_imp_load_2018-07-16-09-20-01</td>
+<td><select id="select2560582" name="select2560582" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890995'.replace('<CHOICE>', document.getElementById('select2560582').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560583" name="select2560583" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890995'.replace('<CHOICE>', document.getElementById('select2560583').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 130</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:25</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890996">job_201708251717_4890996</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_payment_transactions_final_lup1.orders_imp_load_2018-07-16-09-20-01</td>
+<td><select id="select2560584" name="select2560584" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890996'.replace('<CHOICE>', document.getElementById('select2560584').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560585" name="select2560585" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890996'.replace('<CHOICE>', document.getElementById('select2560585').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 136</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:26</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890998">job_201708251717_4890998</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_orders_final_lup1.orders_imp_load_2018-07-16-09-20-01</td>
+<td><select id="select2560586" name="select2560586" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890998'.replace('<CHOICE>', document.getElementById('select2560586').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560587" name="select2560587" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890998'.replace('<CHOICE>', document.getElementById('select2560587').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 137</td><td>0</td><td>0.0</td>
+<td>0 / 6</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:26</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4890999">job_201708251717_4890999</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_shipments_final_snc1.orders_prod_merge_2018-07-16-08-05-01</td>
+<td><select id="select2560588" name="select2560588" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4890999'.replace('<CHOICE>', document.getElementById('select2560588').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560589" name="select2560589" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4890999'.replace('<CHOICE>', document.getElementById('select2560589').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 185</td><td>0</td><td>0.0</td>
+<td>0 / 38</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:26</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891001">job_201708251717_4891001</a></td><td>etl_adhoc</td>
+<td>insert_dim_places_tmp_[2]_20180716085308</td>
+<td><select id="select2560590" name="select2560590" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891001'.replace('<CHOICE>', document.getElementById('select2560590').value);">
+<option value="default" selected>default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560591" name="select2560591" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891001'.replace('<CHOICE>', document.getElementById('select2560591').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>29 / 30</td><td>1</td><td>1.0</td>
+<td>0 / 10</td><td>10</td><td>10.0</td>
+<tr>
+<td>Jul 16, 09:27</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891003">job_201708251717_4891003</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_voucher_txn_db_voucher_txn_events_final_snc1.vts_prod_merge_2018-07-16-09-25-01</td>
+<td><select id="select2560592" name="select2560592" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891003'.replace('<CHOICE>', document.getElementById('select2560592').value);">
+<option value="default" selected>default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560593" name="select2560593" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891003'.replace('<CHOICE>', document.getElementById('select2560593').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>778 / 778</td><td>0</td><td>0.0</td>
+<td>0 / 195</td><td>195</td><td>195.0</td>
+<tr>
+<td>Jul 16, 09:29</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891012">job_201708251717_4891012</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_shipments_final_lup1.orders_prod_merge_2018-07-16-08-20-01</td>
+<td><select id="select2560594" name="select2560594" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891012'.replace('<CHOICE>', document.getElementById('select2560594').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560595" name="select2560595" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891012'.replace('<CHOICE>', document.getElementById('select2560595').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 41</td><td>0</td><td>0.0</td>
+<td>0 / 4</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:31</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891016">job_201708251717_4891016</a></td><td>etl_adhoc</td>
+<td>insert_sf_case_tmp_[2]_20180716090006</td>
+<td><select id="select2560596" name="select2560596" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891016'.replace('<CHOICE>', document.getElementById('select2560596').value);">
+<option value="default" selected>default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560597" name="select2560597" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891016'.replace('<CHOICE>', document.getElementById('select2560597').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>3 / 5</td><td>2</td><td>2.0</td>
+<td>0 / 2</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:30</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891017">job_201708251717_4891017</a></td><td>etl_adhoc</td>
+<td>di_kafka_mr_consumer</td>
+<td><select id="select2560598" name="select2560598" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891017'.replace('<CHOICE>', document.getElementById('select2560598').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer" selected>kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560599" name="select2560599" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891017'.replace('<CHOICE>', document.getElementById('select2560599').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 625</td><td>422</td><td>625.0</td>
+<td>0 / 0</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:31</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891020">job_201708251717_4891020</a></td><td>etl_adhoc</td>
+<td>tracky_json_event/pull_data-c6150f37-c792-426a-ae56-50f1b51be453</td>
+<td><select id="select2560600" name="select2560600" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891020'.replace('<CHOICE>', document.getElementById('select2560600').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4" selected>p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560601" name="select2560601" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891020'.replace('<CHOICE>', document.getElementById('select2560601').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>269 / 282</td><td>13</td><td>14.0</td>
+<td>0 / 28</td><td>11</td><td>28.0</td>
+<tr>
+<td>Jul 16, 09:30</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891021">job_201708251717_4891021</a></td><td>etl_adhoc</td>
+<td>tracky_json_event/pull_data-35e921ae-f80d-4ac2-9055-5c907c688365</td>
+<td><select id="select2560602" name="select2560602" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891021'.replace('<CHOICE>', document.getElementById('select2560602').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4" selected>p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560603" name="select2560603" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891021'.replace('<CHOICE>', document.getElementById('select2560603').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>69 / 69</td><td>0</td><td>0.0</td>
+<td>0 / 3</td><td>3</td><td>3.0</td>
+<tr>
+<td>Jul 16, 09:30</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891022">job_201708251717_4891022</a></td><td>etl_adhoc</td>
+<td>tracky_json_event/pull_data-59d66b76-d5fe-4a9e-9d2a-4c397ee26566</td>
+<td><select id="select2560604" name="select2560604" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891022'.replace('<CHOICE>', document.getElementById('select2560604').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4" selected>p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560605" name="select2560605" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891022'.replace('<CHOICE>', document.getElementById('select2560605').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>203 / 203</td><td>0</td><td>0.0</td>
+<td>1 / 1</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:31</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891024">job_201708251717_4891024</a></td><td>etl_adhoc</td>
+<td>tracky_json_event/pull_data-eae0e273-69ba-463e-8627-a073c5a9bae4</td>
+<td><select id="select2560606" name="select2560606" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891024'.replace('<CHOICE>', document.getElementById('select2560606').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4" selected>p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560607" name="select2560607" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891024'.replace('<CHOICE>', document.getElementById('select2560607').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>69 / 69</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>1</td><td>1.0</td>
+<tr>
+<td>Jul 16, 09:30</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891025">job_201708251717_4891025</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_collection_transactions_final_snc1.orders_prod_load_2018-07-16-08-10-02</td>
+<td><select id="select2560608" name="select2560608" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891025'.replace('<CHOICE>', document.getElementById('select2560608').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560609" name="select2560609" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891025'.replace('<CHOICE>', document.getElementById('select2560609').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 12</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:30</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891027">job_201708251717_4891027</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_groupon_production_order_shipping_cost_versions_final_snc1.orders_prod_merge_2018-07-16-08-05-01</td>
+<td><select id="select2560610" name="select2560610" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891027'.replace('<CHOICE>', document.getElementById('select2560610').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560611" name="select2560611" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891027'.replace('<CHOICE>', document.getElementById('select2560611').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 76</td><td>0</td><td>0.0</td>
+<td>0 / 9</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:30</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891030">job_201708251717_4891030</a></td><td>etl_adhoc</td>
+<td>tracky_json_event/pull_data-e8e9ce54-a5f9-4b60-834d-0406e2a7c0b0</td>
+<td><select id="select2560612" name="select2560612" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891030'.replace('<CHOICE>', document.getElementById('select2560612').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4" selected>p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560613" name="select2560613" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891030'.replace('<CHOICE>', document.getElementById('select2560613').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>69 / 69</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>1</td><td>1.0</td>
+<tr>
+<td>Jul 16, 09:32</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891046">job_201708251717_4891046</a></td><td>etl_adhoc</td>
+<td>rocketman_send_pull</td>
+<td><select id="select2560614" name="select2560614" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891046'.replace('<CHOICE>', document.getElementById('select2560614').value);">
+<option value="default" selected>default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560615" name="select2560615" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891046'.replace('<CHOICE>', document.getElementById('select2560615').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>5 / 12</td><td>7</td><td>7.0</td>
+<td>0 / 8</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:32</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891052">job_201708251717_4891052</a></td><td>etl_adhoc</td>
+<td>insert_deal_merch_product_tmp_[1]_201807160815</td>
+<td><select id="select2560616" name="select2560616" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891052'.replace('<CHOICE>', document.getElementById('select2560616').value);">
+<option value="default" selected>default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560617" name="select2560617" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891052'.replace('<CHOICE>', document.getElementById('select2560617').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>10 / 10</td><td>0</td><td>0.0</td>
+<td>0 / 0</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:33</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891053">job_201708251717_4891053</a></td><td>etl_adhoc</td>
+<td>tdmerge/get_rows_to_process-72611feee0031c23bb6e2817c729f6d520180715</td>
+<td><select id="select2560618" name="select2560618" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891053'.replace('<CHOICE>', document.getElementById('select2560618').value);">
+<option value="default" selected>default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560619" name="select2560619" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891053'.replace('<CHOICE>', document.getElementById('select2560619').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>1 / 1</td><td>0</td><td>0.0</td>
+<td>1 / 1</td><td>0</td><td>1.0</td>
+<tr>
+<td>Jul 16, 09:33</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891054">job_201708251717_4891054</a></td><td>etl_adhoc</td>
+<td>cs_agg_zendesk_utc_us/assertion_hive_agg_count-44a47ca1afad485e5703b347d570901d20180715</td>
+<td><select id="select2560620" name="select2560620" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891054'.replace('<CHOICE>', document.getElementById('select2560620').value);">
+<option value="default" selected>default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5">p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560621" name="select2560621" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891054'.replace('<CHOICE>', document.getElementById('select2560621').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>1 / 1</td><td>0</td><td>0.0</td>
+<td>1 / 1</td><td>0</td><td>1.0</td>
+<tr>
+<td>Jul 16, 09:33</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891055">job_201708251717_4891055</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_stores_production_options_quantities_final_stores.snc1_prod_merge_2018-07-16-09-30-01</td>
+<td><select id="select2560622" name="select2560622" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891055'.replace('<CHOICE>', document.getElementById('select2560622').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560623" name="select2560623" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891055'.replace('<CHOICE>', document.getElementById('select2560623').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 125</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>0</td><td>0.0</td>
+<tr>
+<td>Jul 16, 09:33</td>
+<td><a href="jobdetails.jsp?jobid=job_201708251717_4891056">job_201708251717_4891056</a></td><td>megatron</td>
+<td>MEGATRON_MERGE_stores_production_store_locations_final_stores.snc1_prod_merge_2018-07-16-09-30-01</td>
+<td><select id="select2560624" name="select2560624" onchange="window.location = '/scheduler?setPool=<CHOICE>&jobid=job_201708251717_4891056'.replace('<CHOICE>', document.getElementById('select2560624').value);">
+<option value="default">default</option>
+<option value="kafkaconsumer">kafkaconsumer</option>
+<option value="p0">p0</option>
+<option value="p1">p1</option>
+<option value="p2">p2</option>
+<option value="p3">p3</option>
+<option value="p4">p4</option>
+<option value="p5" selected>p5</option>
+<option value="po">po</option>
+</select>
+</td>
+<td><select id="select2560625" name="select2560625" onchange="window.location = '/scheduler?setPriority=<CHOICE>&jobid=job_201708251717_4891056'.replace('<CHOICE>', document.getElementById('select2560625').value);">
+<option value="VERY_LOW">VERY_LOW</option>
+<option value="LOW">LOW</option>
+<option value="NORMAL" selected>NORMAL</option>
+<option value="HIGH">HIGH</option>
+<option value="VERY_HIGH">VERY_HIGH</option>
+</select>
+</td>
+<td>0 / 4</td><td>0</td><td>0.0</td>
+<td>0 / 1</td><td>0</td><td>0.0</td>
+</table>
+</body></html>

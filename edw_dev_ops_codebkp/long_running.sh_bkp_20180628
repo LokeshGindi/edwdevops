@@ -1,0 +1,208 @@
+#!/bin/bash
+
+#FUNCTION TO PRINT THE LOG INFORMATION INTO THE LOG FILE
+
+function print_log_info {
+ case $1 in
+  1)    echo -e "$2\t$(date '+%e %b %Y %T')\t$3\t\t$4" | tee -a $EDW_LONG_RUN_LOG_FILE
+        ;;
+  2)    echo -e "\t\t\t\t\t\t\t$2" | tee -a $EDW_LONG_RUN_LOG_FILE
+        ;;
+  usage) echo -e ""
+        echo -e "Usage: sh overall_pipeline.sh <<params>>"
+        echo -e "Ex: sh overall_pipeline.sh"
+        echo -e ""
+        ;;
+ esac
+}
+
+
+#FUNCTION TO FETCH MYSQL DB DETAILS AND EXECUTE SQL.
+
+function run_mysql_file {
+#MYSQLDB_ID,sql_file
+MYSQLDB_ID=$1
+MYSQL_RUN_FILE=$2
+#REMOVE_TMP_FIL=$3
+
+
+TEMP_SQL_LOG=$EDW_VIEWPOINT_LOG/temp_mysql_longrun_output.log
+>$TEMP_SQL_LOG
+
+MYSQL_DB_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_HOST_NAME=$(grep "\<${MYSQLDB_ID}_MYSQLDB_HOST_NAME\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_DB_USER=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DB_USER\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+MYSQLDB_DBUSR_PASSWD=$(grep "\<${MYSQLDB_ID}_MYSQLDB_DBUSR_PASSWD\>" $VIEWPOINT_PARAM | head -1 | cut -d'=' -f2)
+
+ if ! mysql -u$MYSQLDB_DB_USER -p$MYSQLDB_DBUSR_PASSWD -D $MYSQL_DB_NAME -h $MYSQLDB_HOST_NAME -N <$MYSQL_RUN_FILE > $TEMP_SQL_LOG 2>&1 ; then
+   print_log_info 1 ERROR OVRALL_PIPE_STS "Not able to execute sql:[${MYSQL_RUN_FILE}] at  [$MYSQLDB_DB_USER}@${MYSQL_DB_NAME}]."
+   sed 's/^/                                              /' $TEMP_SQL_LOG | tee -a $EDW_LONG_RUN_LOG_FILE
+   exit 1
+ else
+   print_log_info 1 INFO OVRALL_PIPE_STS "Successfully executed sql:[${MYSQL_RUN_FILE}] at  [$MYSQLDB_DB_USER}@${MYSQL_DB_NAME}]." 
+ fi
+
+#if [[ ! -z $REMOVE_TMP_FIL ]] ; then
+#   rm -f $TEMP_SQL_LOG
+#fi
+
+}
+
+# BELOW CONFIG FILE HOLDS VIEWPOINT SPECIFIC ENVIRONMENT DETAILS WHICH WILL HELP IN EASIER DEPLOYMENT OF FRAMEWORK.
+. /var/groupon/edwdevops/conf/opsviewpoint.cfg
+
+#MAIN SCRIPT BEGINS HERE
+ALL_PARS_PASSED="$*"
+
+#CHECK IF THERE ARE ANY OVERRIDE PARAMETERS, ELSE PICK FROM DEFAULT CONFIG.
+
+VIEWPOINT_CONFIG=$EDW_VIEWPOINT_HOME/conf
+VIEWPOINT_PARAM=$VIEWPOINT_CONFIG/opsviewpoint.parm
+
+EDW_LONG_RUN_LOG_FILE=$EDW_VIEWPOINT_LOG/long_running-$(date +%F-%T).log
+LONG_RUN_HTML=$EDW_LONGRUN_HOME/long_running_test.html
+LONG_RUN_HTML_PETL=$EDW_LONGRUN_HOME/long_running_petl_test.html
+LONG_RUN_HTML_GDOOP=$EDW_LONGRUN_HOME/long_running_gdoop_test.html
+LONG_RUN_HTML_CEREBRO=$EDW_LONGRUN_HOME/long_running_cerebro_test.html
+LONG_RUN_OPSW_SQL=$EDW_LONGRUN_HOME/long_running_test.sql
+LONG_RUN_OPSW_FIL=$EDW_LONGRUN_HOME/long_running_test.csv
+LONG_RUN_HADOOP_TMP_FIL=$EDW_LONGRUN_HOME/long_running_hadoop_test.csv
+LONG_RUN_HADOOP_FIL=$EDW_LONGRUN_HOME/long_running_hadoop_merged_test.csv
+
+#NAMENODE_PETL="http://pit-prod-etljob1.snc1:50030"
+#NAMENODE_GDOOP="http://gdoop-resourcemanager-vip.snc1:8088"
+#NAMENODE_CEREBRO="http://cerebro-resourcemanager-vip.snc1:8088"
+#RESOURCE_MGR_PETL="${NAMENODE_PETL}/scheduler"
+#RESOURCE_MGR_GDOOP="${NAMENODE_GDOOP}/cluster/scheduler"
+#RESOURCE_MGR_CEREBRO="${NAMENODE_CEREBRO}/cluster/scheduler"
+
+GDOOP_QUEUE_HTML_FIL1=$EDW_LONGRUN_HOME/g_queue_1_test.html
+GDOOP_QUEUE_HTML_FIL2=$EDW_LONGRUN_HOME/g_queue_2_test.html
+GDOOP_QUEUE_DATA=$EDW_LONGRUN_HOME/g_queue_test.csv
+
+#DISPLAYING ALL PARAMETERS PASSED
+echo -e "$ALL_PARS_PASSED" >$EDW_LONG_RUN_LOG_FILE
+
+echo -e "Info\tTimestamp\t\tProcess\t\t\tMessage" >>$EDW_LONG_RUN_LOG_FILE
+echo -e "~~~~\t~~~~~~~~~\t\t~~~~~~~\t\t\t~~~~~~~" >>$EDW_LONG_RUN_LOG_FILE
+print_log_info 1 INFO LONG_RUNNIG_STS "Started long_running.sh"
+print_log_info 1 INFO LONG_RUNNIG_STS "Writing output to log file [$EDW_LONG_RUN_LOG_FILE]"
+
+#mysql -hgds-snc1-prod-opswise-cntrl-rw-vip.snc1 -uopswise_ro -popswise_ro -Dopswise </var/groupon/edwdevops/long_running/long_running.sql|tr '\t' ,|tail -n +2 >/var/groupon/edwdevops/long_running/long_running.csv
+
+print_log_info 1 INFO LONG_RUNNIG_STS "Execute Long running sql in opswise DB."
+
+run_mysql_file SNC_OPSWISE $LONG_RUN_OPSW_SQL 
+
+cat $TEMP_SQL_LOG |tr '\t' , |tail -n +2 >$LONG_RUN_OPSW_FIL
+
+#curl 'http://pit-prod-etljob1.snc1:50030/scheduler' > /var/groupon/edwdevops/long_running/long_running_petl.html
+#curl 'http://gdoop-resourcemanager-vip.snc1:8088/cluster/scheduler' > /var/groupon/edwdevops/long_running/long_running_gdoop.html
+#curl 'http://cerebro-resourcemanager-vip.snc1:8088/cluster/scheduler' > /var/groupon/edwdevops/long_running/long_running_cerebro.html
+
+#rm -f /var/groupon/edwdevops/long_running/long_running_hadoop.csv
+print_log_info 2 "Fetch curl response"
+
+curl -s "$RESOURCE_MGR_PETL" >$LONG_RUN_HTML_PETL
+curl -s "$RESOURCE_MGR_GDOOP" >$LONG_RUN_HTML_GDOOP
+curl -s "$RESOURCE_MGR_CEREBRO" >$LONG_RUN_HTML_CEREBRO
+
+>$LONG_RUN_HADOOP_TMP_FIL
+print_log_info 2 "Parse curl response."
+grep -e '<td>\|<tr>\|selected>' $LONG_RUN_HTML_PETL |grep -v "<tr><t" |tr -d '\n,'|sed 's/<tr>/\n/g'|sed 's/<td>//g'|sed '/^$/d'|sed 's/<\/td>/,/g'|sed 's/>/,/g'|sed 's/</,/g'|awk -F',' '$7=="etl_adhoc" || $7=="megatron" {print  "<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=" $4 ">" $4 "</a>" FS $17 FS substr($8,1,30) FS system("echo -n `date --date=\""$1"\" +'%s'`;echo -n ,")}'|awk -F',' -v curr="$(date +'%s')" '{print $2 FS $4 FS "SNC1 Prod ETL" FS $3 FS int((curr-$1)/60)}' >>$LONG_RUN_HADOOP_TMP_FIL
+
+grep '^\[' $LONG_RUN_HTML_GDOOP |tr -d '\"\\'|awk -F"," -v curr="$(date +'%s')" '($2=="svc_edw_prod" || $2=="svc_meg_prod") {print $1 FS $5 FS $3 FS int((curr - substr($7,1,10))/60)}' | awk -F'[><]' '{print "<a href=${NAMENODE_GDOOP}/cluster/app/" $3 ">" $3 "</a>," $0}'|awk -F"," '{print $1 FS substr($4,1,30) FS "Gdoop" FS $3 FS $5}' >> $LONG_RUN_HADOOP_TMP_FIL
+
+grep '^\[' $LONG_RUN_HTML_CEREBRO |tr -d '\"\\'|awk -F"," -v curr="$(date +'%s')" '($2=="svc_edw_prod" || $2=="svc_replicator_prod") {print $1 FS $5 FS $3 FS int((curr - substr($7,1,10))/60)}' | awk -F'[><]' '{print "<a href=${NAMENODE_CEREBRO}/cluster/app/" $3 ">" $3 "</a>," $0}'|awk -F"," '{print $1 FS substr($4,1,30) FS "Cerebro" FS $3 FS $5}' >>$LONG_RUN_HADOOP_TMP_FIL
+
+
+sort -t"," -k5nr,5 $LONG_RUN_HADOOP_TMP_FIL |awk -F"," '$5>30 {print $1 FS $2 FS $3 FS $4 FS int($5/60) ":" $5%60}' > $LONG_RUN_HADOOP_FIL
+
+
+#ops_count=`wc -l < /var/groupon/edwdevops/long_running/long_running.csv`
+#hadoop_count=`wc -l < /var/groupon/edwdevops/long_running/long_running_hadoop_merged.csv`
+ops_count=$(wc -l < $LONG_RUN_OPSW_FIL)
+hadoop_count=$(wc -l < $LONG_RUN_HADOOP_FIL)
+print_log_info 2 "ops_count:$ops_count hadoop_count:$hadoop_count"
+run_tm=`date '+%FT%TZ'`
+utc_time=`date -u`
+
+print_log_info 2 "Generate html for long running jobs."
+
+echo "<html><title>Long Running Jobs</title><head><link rel="icon" href="favicon.png"></head><body>
+<body bgcolor=white>
+<meta http-equiv="refresh" content="900">
+<h5 align="right" ; style=\"color:SLATEGRAY; font-size:10px ; margin: 0; padding: 0 ;\" ; <span style=font-weight:normal>
+<p style="display:inline">[Last refresh: </p>
+<p style="display:inline" id="min_l"></p>
+<p style="display:inline"> min back @ ${utc_time}]
+</span>
+</h5>
+<br>Long Running Opswise Job Count :  <b>${ops_count}</b>
+<br>Long Running Hadoop Job Count : <b>${hadoop_count}</b></p>
+<script>
+var refresh_l = new Date('${run_tm}');
+var now_l = new Date();
+var diff_l = now_l - refresh_l;
+var diff_min_l = Math.round(diff_l / 60000);
+document.getElementById('min_l').innerHTML= diff_min_l;
+</script>
+
+<h2>Long Running Opswise Jobs</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style="font-size:10px">
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Type</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Trigger Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Run Duration</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Avg Dur</b></th>
+</tr>" > $LONG_RUN_HTML
+
+
+
+cat $LONG_RUN_OPSW_FIL |sed -e 's/$/<\/td><\/tr>/g' -e 's/^/<tr style="font-size:10px" bgcolor="#@"><td align="left" style="white-space:nowrap;">/g' -e 's/,/<\/td><td align="left" style="white-space:nowrap;">/g' | awk -F"@" '{ if($0~">UNIX</td>") {print $1 "FFFFFF" $2} else {print $1 "DCD5D3" $2} }' >> $LONG_RUN_HTML
+
+echo "</table>" >> $LONG_RUN_HTML
+
+print_log_info 2 "Generate html for Gdoop queue usage."
+
+grep -v '^\[' $LONG_RUN_HTML_GDOOP | tr -d '\n ,#'| sed -r 's/<tr>|<divclass/\n/g' > $GDOOP_QUEUE_HTML_FIL1 
+rm -f $GDOOP_QUEUE_HTML_FIL2
+ 
+for i in `cat $GDOOP_QUEUE_HTML_FIL1`; do echo $i|grep -Eo 'Queue:[^<]*' >> $GDOOP_QUEUE_HTML_FIL2 ; echo $i| grep -e svc_edw_prod -e svc_janus -e svc_meg_prod -e svc_replicator_prod >> $GDOOP_QUEUE_HTML_FIL2 ; done
+sed 's#</td><td>#,#g' $GDOOP_QUEUE_HTML_FIL2 |sed 's/vCores:/,/g'| sed -r 's#<td>|&lt;|&gt;|</td>|</tr>##g'|cut -d, -f1,3,5,10,11|tr '\n' '#'|sed 's/Queue:/\nQueue:/g'|tail -n +2|awk -F'#' '{if ( NF != 2 ) print $0}'|sed 's/.$//'|tr '#' '\n'|awk -F',' '{if ( NF == 5 ) print $1 FS $2 FS int(($3*100)/$2) "%" FS $4 FS $5; else print $0}' > $GDOOP_QUEUE_DATA
+
+
+echo "<h2>Gdoop Queue Status</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style="font-size:10px">
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>User Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Total Resource</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Used %</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Running Apps</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Waiting Apps</b></th>
+</tr>" >> $LONG_RUN_HTML
+
+cat $GDOOP_QUEUE_DATA |sed -e 's/$/<\/td><\/tr>/g' -e 's/^/<tr style="font-size:10px" bgcolor="#@"><td align="left" style="white-space:nowrap;">/g' -e 's/,/<\/td><td align="left" style="white-space:nowrap;">/g' | awk -F"@" '{ if($0~">UNIX</td>") {print $1 "FFFFFF" $2} else {print $1 "DCD5D3" $2} }' >> $LONG_RUN_HTML
+
+echo "</table>" >> $LONG_RUN_HTML
+sed -i -e 's/">Queue:/font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:/g' $LONG_RUN_HTML
+
+print_log_info 2 "Generate html for Hadoop long running jobs."
+
+echo "<h2>Long Running Hadoop Jobs (Run Duration > 30 min)</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style="font-size:10px">
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job ID</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Name Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Host</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Queue</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Run Duration</b></th>
+</tr>" >> $LONG_RUN_HTML
+
+cat $LONG_RUN_HADOOP_FIL |sed -e 's/$/<\/td><\/tr>/g' -e 's/^/<tr style="font-size:10px"><td align="left" style="white-space:nowrap;">/g' -e 's/,/<\/td><td align="left" style="white-space:nowrap;">/g' >> $LONG_RUN_HTML
+echo "</table></body></html>" >> $LONG_RUN_HTML
+
+print_log_info 2 "Archive the previous long running info."
+
+#cp $LONG_RUN_HTML  /var/groupon/edwdevops/edw-dev-ops/archive/long_running/long_running_$(date +%F_%T).html

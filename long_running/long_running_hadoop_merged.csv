@@ -1,0 +1,12 @@
+<a href=http://gdoop-resourcemanager-vip.snc1:8088/cluster/app/application_1530661673092_136280>application_1530661673092_136280</a>,parse_bh_impression,Gdoop,edw_traffic_noncore,6:4
+<a href=http://cerebro-resourcemanager-vip.snc1:8088/cluster/app/application_1530656550018_134132>application_1530656550018_134132</a>,distcp,Cerebro,edw_core,2:18
+<a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890720>job_201708251717_4890720</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,1:4
+<a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890772>job_201708251717_4890772</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,0:56
+<a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890795>job_201708251717_4890795</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,0:50
+<a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890798>job_201708251717_4890798</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,0:49
+<a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890860>job_201708251717_4890860</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,0:42
+<a href=http://cerebro-resourcemanager-vip.snc1:8088/cluster/app/application_1530656550018_134730>application_1530656550018_134730</a>,prod_groupondw.dim_user_histor,Cerebro,replicator,0:38
+<a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890887>job_201708251717_4890887</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,0:38
+<a href=http://cerebro-resourcemanager-vip.snc1:8088/cluster/app/application_1530656550018_134749>application_1530656550018_134749</a>,zendesk.zendesk_cases,Cerebro,replicator,0:35
+<a href=http://cerebro-resourcemanager-vip.snc1:8088/cluster/app/application_1530656550018_134753>application_1530656550018_134753</a>,prod_groupondw.dim_user,Cerebro,replicator,0:34
+<a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890910>job_201708251717_4890910</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,0:33

@@ -1,0 +1,14 @@
+﻿Trim(BOTH FROM DatabaseName)                                ,   MAXSPACE,  USEDSPACE,REMAININGSPACE,Percentage_Used,STATUS
+------------------------------------------------------------ ----------- ----------- -------------- --------------- ---------------------
+dwh_base                                                    ,      17873,      15952,          1921,             89,SUCCESS
+edwprod                                                     ,      12331,       9698,          2633,             79,SUCCESS
+meg_grp_prod                                                ,       6309,       4693,          1616,             74,SUCCESS
+groupon_production                                          ,       4899,       3169,          1730,             65,SUCCESS
+db_matt                                                     ,       2723,       1665,          1058,             61,SUCCESS
+dwh_mart                                                    ,       6194,       3468,          2726,             56,SUCCESS
+prod_groupondw                                              ,      78574,      41646,         36928,             53,SUCCESS
+staging                                                     ,      14638,       6980,          7658,             48,SUCCESS
+dwh_base_staging                                            ,       1023,        246,           777,             24,SUCCESS
+dw                                                          ,       4092,        817,          3275,             20,SUCCESS
+poc                                                         ,       3502,        522,          2980,             15,SUCCESS
+dwh_manage                                                  ,        224,         14,           210,              6,SUCCESS

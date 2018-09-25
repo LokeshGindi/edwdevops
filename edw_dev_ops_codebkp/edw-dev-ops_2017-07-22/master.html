@@ -1,0 +1,138 @@
+<html>
+<title>VIEWPOINT- EDW-DEV-OPS</title>
+<head><link rel="icon" href="favicon.png"></head>
+<body bgcolor="#000000">
+<meta http-equiv="refresh" content="900">
+<font color="#000000" style="font-family:calibri;font-size:12px;">
+
+<marquee behavior="scroll" direction="left" BGCOLOR="BLACK">
+<font color="white" style="font-family:calibri;">
+<p align="top" font-color="white" >Release ticket for the week: <a href="https://jira.groupondev.com/browse/EDW-61797" style="color:white">https://jira.groupondev.com/browse/EDW-61797</a></p>
+</marquee>
+
+<style type="text/css">
+html, body{width: 100%; height: 100%; padding: 0; margin: 0}
+div{position: absolute; padding: 1em; border: 2px solid #000000}
+#aa{background: #000000; top: 5%; left: 1%; right: 1%; bottom: 86%}
+#ab{background: #CCCCCC; top: 15%; left: 1%; right: 67%; bottom: 1%}
+#ae{background: #CCCCCC; top: 15%; left: 67%; right: 1%; bottom: 44%}
+#ad{background: #CCCCCC; top: 58%; left: 34%; right: 34%; bottom: 1%}
+#af{background: #CCCCCC; top: 58%; left: 67%; right: 1%; bottom: 1%}
+#ac{background: #CCCCCC; top: 15%; left: 34%; right: 34%; bottom: 44%}
+</style>
+
+
+<div id="aa">
+<h2 align="center" style="color:white;">EDW DEV OPS- VIEWPOINT</h2><br>
+</div>
+
+<div id="ab">
+<h4 align="center">EDW Pipeline Status</h4>
+<p><a href="http://pit-prod-owagent3.snc1:8080/overall_pipeline.html" target="_blank">Overall Pipeline Status >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_o></p>
+<p style=display:inline> min back)
+<br>EDW Pipeline Status for date 2017-07-21 - <b>79% Completed</b></p>
+<p><b>Pending Loads</b>-  gbl_fact_transactions, gbl_superfunnel*, EMEA_push_notification, NA_push_notification, gbl_performance</p>
+<p><b>SLAs missed</b>- None</p>
+<p>Last Refreshed UTC Time: <b>Sat Jul 22 12:00:03 UTC 2017</b></p>
+<script>
+var refresh_o = new Date('2017-07-22T12:00:03Z');
+var now_o = new Date();
+var diff_o = now_o - refresh_o;
+var diff_min_o = Math.round(diff_o / 60000);
+document.getElementById('min_o').innerHTML= diff_min_o;
+</script>
+<p><a href="http://pit-prod-owagent3.snc1:8080/eod_table_limits.html" target="_blank">View Table Limits Status >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_e></p>
+<p style=display:inline> min back)
+<br>EOD Table Limits status for 2017-07-21 - <b>100% Completed</b></p>
+<script>
+var refresh_e = new Date('2017-07-22T09:45:09Z');
+var now_e = new Date();
+var diff_e = now_e - refresh_e;
+var diff_min_e = Math.round(diff_e / 60000);
+document.getElementById('min_e').innerHTML= diff_min_e;
+</script>
+<p><a href="http://pit-prod-owagent3.snc1:8080/bh_mob_status_gdoop.html" target="_blank">Gdoop Pipeline Status >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_g></p>
+<p style=display:inline> min back)
+<br>GDOOP Pipeline Status- Load completed till <b>2017-07-22 04:59:59</b></p>
+<script>
+var refresh_g = new Date('2017-07-22T12:00:06Z');
+var now_g = new Date();
+var diff_g = now_g - refresh_g;
+var diff_min_g = Math.round(diff_g / 60000);
+document.getElementById('min_g').innerHTML= diff_min_g;
+</script>
+<p><a href="http://pit-prod-owagent3.snc1:8080/mob_status.html" target="_blank">Mobile Tracky Pipeline Status >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_m></p>
+<p style=display:inline> min back)
+<br>Mobile Tracky Status- Load completed till <b>2017-07-22 04:59:59</b></p>
+<script>
+var refresh_m = new Date('2017-07-22T12:00:02Z');
+var now_m = new Date();
+var diff_m = now_m - refresh_m;
+var diff_min_m = Math.round(diff_m / 60000);
+document.getElementById('min_m').innerHTML= diff_min_m;
+</script>
+</div>
+
+<div id="ac">
+<h4 align="center">System Health</h4>
+<p><a href="http://pit-prod-owagent3.snc1:8080/space_usage.html" target="_blank">Space Usage >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_s></p>
+<p style=display:inline> min back)
+<br><b>Hadoop Cluster Usage-</b> PETL- 57%, Cerebro- 55%, Gdoop- 51%</p>
+<script>
+var refresh_s = new Date('2017-07-22T12:01:45Z');
+var now_s = new Date();
+var diff_s = now_s - refresh_s;
+var diff_min_s = Math.round(diff_s / 60000);
+document.getElementById('min_s').innerHTML= diff_min_s;
+</script>
+<p><b>TD batch password expiry</b> (next 15 days)- None</p>
+</div>
+
+<div id="ad">
+<h4 align="center">ETL Job Metrics</h4>
+<p><a href="http://pit-prod-owagent3.snc1:8080/long_running.html" target="_blank">Long Running Jobs >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_l></p>
+<p style=display:inline> min back)
+<br>Long Running Opswise Job Count- <b>2</b>
+<br>Long Running Hadoop Job Count- <b>5</b></p>
+<script>
+var refresh_l = new Date('2017-07-22T12:00:07Z');
+var now_l = new Date();
+var diff_l = now_l - refresh_l;
+var diff_min_l = Math.round(diff_l / 60000);
+document.getElementById('min_l').innerHTML= diff_min_l;
+</script>
+</div>
+
+<div id="ae">
+<h4 align="center">Open Tickets</h4>
+<p><a href="https://groupon.pagerduty.com/services/PUT2G05" target="_blank">Open Pager Incidents >></a></p>
+<p><a href="https://jira.groupondev.com/secure/Dashboard.jspa?selectPageId=26445" target="_blank">Open Jira Tickets >></a></p>
+</div>
+
+<div id="af">
+<h4 align="center">References</h4>
+<p><a href="https://wiki.groupondev.com/Megatron_Run_Book" target="_blank">Megatron Runbook >></a></p>
+<p><a href="https://goo.gl/hfwzGn" target="_blank"> Janus Runbook >></a></p>
+<p><a href="https://goo.gl/KN8Qrn" target="_blank">EDW Runbook >></a></p>
+<p><a href="https://goo.gl/iV77zZ" target="_blank">Dev-Ops Reference>></a></p>
+<p><a href="https://goo.gl/KoL2u4" target="_blank">Oncall Roatation>></a></p>
+<p><a href="https://goo.gl/E4fLPx" target="_blank">Release Issues>></a></p>
+</div>
+
+
+
+</font>
+</body>
+</html>

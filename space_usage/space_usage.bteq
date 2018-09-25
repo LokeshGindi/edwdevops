@@ -1,0 +1,9 @@
+
+    .logon tdwd/warehouse1,B5da031237;
+    .set width 10000
+    .os rm -f /var/groupon/edwdevops/space_usage/space_usage.report
+    .export report file=/var/groupon/edwdevops/space_usage/space_usage.report
+    .set separator ','
+    .run file /var/groupon/edwdevops/space_usage/space_usage.sql
+    .export reset   
+    .exit

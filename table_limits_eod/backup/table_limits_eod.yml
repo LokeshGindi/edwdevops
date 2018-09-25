@@ -1,0 +1,25 @@
+create_file:
+  class: SQLExport
+  configuration:
+    db:
+      adapter: ${dw_adapter}
+      dsn: ${td_dsn}
+    filename: /var/groupon/edwdevops/table_limits_eod/deal_unity_map_tdwc.csv
+    sql_file: deal_unity_map_tdwc.sql 
+    delimiter: ","
+    header: false
+
+create_file_2:
+  class: SQLExport
+  dependencies:
+    - create_file
+  configuration:
+    db:
+      adapter: ${dw_adapter}
+      dsn: ${td_dsn}
+    filename: /var/groupon/edwdevops/table_limits_eod/intl_dash_tdwc.csv
+    sql_file: intl_dash_tdwc.sql
+    delimiter: ","
+    header: false
+
+

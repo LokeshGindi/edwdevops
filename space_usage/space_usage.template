@@ -1,0 +1,1 @@
+ssh keyhostname 'df -hP'|tail -n +2|tr -s ' ' ,|tr -d '%'|awk 'BEGIN{FS=OFS=","} {if ($5>90) print "hostname",$0,"FAILED"; else print "hostname",$0,"SUCCESS"}' >> /var/groupon/edwdevops/space_usage/space_usage.log

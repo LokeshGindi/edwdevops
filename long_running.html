@@ -1,0 +1,74 @@
+<html><title>Long Running Jobs</title><head><link rel=icon href=favicon.png></head><body>
+<meta http-equiv=refresh content=900>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_l></p>
+<p style=display:inline> min back)
+<br>Long Running Opswise Job Count- <b>4</b>
+<br>Long Running Hadoop Job Count- <b>12</b></p>
+<script>
+var refresh_l = new Date('2018-07-16T09:45:06Z');
+var now_l = new Date();
+var diff_l = now_l - refresh_l;
+var diff_min_l = Math.round(diff_l / 60000);
+document.getElementById('min_l').innerHTML= diff_min_l;
+</script>
+
+<h2>Long Running Opswise Jobs</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style=font-size:10px>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Type</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Trigger Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Run Duration</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Avg Dur</b></th>
+</tr>
+<tr style="font-size:10px" bgcolor="#FFFFFF"><td align="left" style="white-space:nowrap;">rep_acctg_table_limit_hist</td><td align="left" style="white-space:nowrap;">UNIX</td><td align="left" style="white-space:nowrap;">Trigger: 0415DLY</td><td align="left" style="white-space:nowrap;">55:30</td><td align="left" style="white-space:nowrap;">10:50</td></tr>
+<tr style="font-size:10px" bgcolor="#FFFFFF"><td align="left" style="white-space:nowrap;">CHECK_EOD_DIM_OFFER_PRODUCT</td><td align="left" style="white-space:nowrap;">UNIX</td><td align="left" style="white-space:nowrap;">Workflow: DLY_OGP_FINANCIAL_${varRUNDATE}</td><td align="left" style="white-space:nowrap;">06:44</td><td align="left" style="white-space:nowrap;">05:21</td></tr>
+<tr style="font-size:10px" bgcolor="#FFFFFF"><td align="left" style="white-space:nowrap;">eucp_tl_check_deal_contract_map$</td><td align="left" style="white-space:nowrap;">UNIX</td><td align="left" style="white-space:nowrap;">Workflow: EUREBRO_COPY_WF3_${varRUNDATE}</td><td align="left" style="white-space:nowrap;">05:44</td><td align="left" style="white-space:nowrap;">02:36</td></tr>
+<tr style="font-size:10px" bgcolor="#FFFFFF"><td align="left" style="white-space:nowrap;">ZENDESK_TICKETS_EXTRACT_DK_2018-07-16</td><td align="left" style="white-space:nowrap;">UNIX</td><td align="left" style="white-space:nowrap;">Workflow: DLY_ZENDESK_TICKETS_INTL_${varRUNDATE}</td><td align="left" style="white-space:nowrap;">01:33</td><td align="left" style="white-space:nowrap;">01:00</td></tr>
+</table>
+<h2>Gdoop Queue Status</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style=font-size:10px>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>User Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Total Resource</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Used %</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Running Apps</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Waiting Apps</b></th>
+</tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:private.edw_traffic_core</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_edw_prod</td><td align="left" style="white-space:nowrap;">2603</td><td align="left" style="white-space:nowrap;">3%</td><td align="left" style="white-space:nowrap;">4</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:private.edw_traffic_noncore</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_edw_prod</td><td align="left" style="white-space:nowrap;">1001</td><td align="left" style="white-space:nowrap;">7%</td><td align="left" style="white-space:nowrap;">4</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:private.pde_batch</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_janus</td><td align="left" style="white-space:nowrap;">1201</td><td align="left" style="white-space:nowrap;">56%</td><td align="left" style="white-space:nowrap;">3</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:private.pde</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_janus</td><td align="left" style="white-space:nowrap;">2052</td><td align="left" style="white-space:nowrap;">74%</td><td align="left" style="white-space:nowrap;">56</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:private.pde_dynamic_queries</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_janus</td><td align="left" style="white-space:nowrap;">450</td><td align="left" style="white-space:nowrap;">86%</td><td align="left" style="white-space:nowrap;">3</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;font-size:15px;color:#000000" bgcolor="#FFFFFF">Queue:public</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_replicator_prod</td><td align="left" style="white-space:nowrap;">70</td><td align="left" style="white-space:nowrap;">2%</td><td align="left" style="white-space:nowrap;">1</td><td align="left" style="white-space:nowrap;">0</td></tr>
+<tr style="font-size:10px" bgcolor="#DCD5D3"><td align="left" style="white-space:nowrap;">svc_edw_prod</td><td align="left" style="white-space:nowrap;">70</td><td align="left" style="white-space:nowrap;">1%</td><td align="left" style="white-space:nowrap;">1</td><td align="left" style="white-space:nowrap;">0</td></tr>
+</table>
+<h2>Long Running Hadoop Jobs (Run Duration > 30 min)</h2>
+<table border=2 cellpadding=3 cellspacing=2>
+<tr style=font-size:10px>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job ID</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Job Name Name</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Host</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Queue</b></th>
+  <th align=center style=white-space:nowrap bgcolor=#81BEF7><b>Run Duration</b></th>
+</tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://gdoop-resourcemanager-vip.snc1:8088/cluster/app/application_1530661673092_136280>application_1530661673092_136280</a></td><td align="left" style="white-space:nowrap;">parse_bh_impression</td><td align="left" style="white-space:nowrap;">Gdoop</td><td align="left" style="white-space:nowrap;">edw_traffic_noncore</td><td align="left" style="white-space:nowrap;">6:4</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://cerebro-resourcemanager-vip.snc1:8088/cluster/app/application_1530656550018_134132>application_1530656550018_134132</a></td><td align="left" style="white-space:nowrap;">distcp</td><td align="left" style="white-space:nowrap;">Cerebro</td><td align="left" style="white-space:nowrap;">edw_core</td><td align="left" style="white-space:nowrap;">2:18</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890720>job_201708251717_4890720</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">1:4</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890772>job_201708251717_4890772</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:56</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890795>job_201708251717_4890795</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:50</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890798>job_201708251717_4890798</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:49</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890860>job_201708251717_4890860</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:42</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://cerebro-resourcemanager-vip.snc1:8088/cluster/app/application_1530656550018_134730>application_1530656550018_134730</a></td><td align="left" style="white-space:nowrap;">prod_groupondw.dim_user_histor</td><td align="left" style="white-space:nowrap;">Cerebro</td><td align="left" style="white-space:nowrap;">replicator</td><td align="left" style="white-space:nowrap;">0:38</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890887>job_201708251717_4890887</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:38</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://cerebro-resourcemanager-vip.snc1:8088/cluster/app/application_1530656550018_134749>application_1530656550018_134749</a></td><td align="left" style="white-space:nowrap;">zendesk.zendesk_cases</td><td align="left" style="white-space:nowrap;">Cerebro</td><td align="left" style="white-space:nowrap;">replicator</td><td align="left" style="white-space:nowrap;">0:35</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://cerebro-resourcemanager-vip.snc1:8088/cluster/app/application_1530656550018_134753>application_1530656550018_134753</a></td><td align="left" style="white-space:nowrap;">prod_groupondw.dim_user</td><td align="left" style="white-space:nowrap;">Cerebro</td><td align="left" style="white-space:nowrap;">replicator</td><td align="left" style="white-space:nowrap;">0:34</td></tr>
+<tr style="font-size:10px"><td align="left" style="white-space:nowrap;"><a href=http://pit-prod-etljob1.snc1:50030/jobdetails.jsp?jobid=job_201708251717_4890910>job_201708251717_4890910</a></td><td align="left" style="white-space:nowrap;">MEGATRON_MERGE_groupon_product</td><td align="left" style="white-space:nowrap;">SNC1 Prod ETL</td><td align="left" style="white-space:nowrap;">p5</td><td align="left" style="white-space:nowrap;">0:33</td></tr>
+</table></body></html>

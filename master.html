@@ -1,0 +1,131 @@
+<html>
+<title>VIEWPOINT- EDW-DEV-OPS</title>
+<head><link rel="icon" href="favicon.png"></head>
+<body bgcolor="#000000">
+<meta http-equiv="refresh" content="900">
+<font color="#000000" style="font-family:calibri;font-size:12px;">
+
+<marquee behavior="scroll" direction="left" BGCOLOR="BLACK">
+<font color="white" style="font-family:calibri;">
+<p align="top" font-color="white" >Release ticket for the week:<a href="https://jira.groupondev.com/browse/EDW-68188" target="_blank">https://jira.groupondev.com/browse/EDW-68188</a></p>
+</marquee>
+
+<style type="text/css">
+html, body{width: 100%; height: 100%; padding: 0; margin: 0}
+div{position: absolute; padding: 1em; border: 2px solid #000000}
+#aa{background: #000000; top: 5%; left: 1%; right: 1%; bottom: 86%}
+#ab{background: #CCCCCC; top: 15%; left: 1%; right: 67%; bottom: 1%}
+#ae{background: #CCCCCC; top: 15%; left: 67%; right: 1%; bottom: 44%}
+#ad{background: #CCCCCC; top: 58%; left: 34%; right: 34%; bottom: 1%}
+#af{background: #CCCCCC; top: 58%; left: 67%; right: 1%; bottom: 1%}
+#ac{background: #CCCCCC; top: 15%; left: 34%; right: 34%; bottom: 44%}
+</style>
+
+
+<div id="aa">
+<h2 align="center" style="color:white;">EDW DEV OPS- VIEWPOINT</h2><br>
+</div>
+
+<div id="ab">
+<h4 align="center">EDW Pipeline Status</h4>
+<p><a href="http://pit-prod-owagent3.snc1:8080/overall_pipeline.html" target="_blank">Overall Pipeline Status >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_o></p>
+<p style=display:inline> min back)
+<br>EDW Pipeline Status for date 2018-07-15 - <b>88% Completed</b></p>
+<p><b>Pending Loads</b>-  zendesk_us, agg_gbl_financials</p>
+<p><b>SLAs missed</b>- None</p>
+<p>Last Refreshed UTC Time: <b>Mon Jul 16 09:45:02 UTC 2018</b></p>
+<script>
+var refresh_o = new Date('2018-07-16T09:45:02Z');
+var now_o = new Date();
+var diff_o = now_o - refresh_o;
+var diff_min_o = Math.round(diff_o / 60000);
+document.getElementById('min_o').innerHTML= diff_min_o;
+</script>
+<p><a href="http://pit-prod-owagent3.snc1:8080/eod_table_limits.html" target="_blank">View Table Limits Status >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_e></p>
+<p style=display:inline> min back)
+<br>EOD Table Limits status for 2018-07-15 - <b>94% Completed</b></p>
+<script>
+var refresh_e = new Date('2018-07-16T09:45:02Z');
+var now_e = new Date();
+var diff_e = now_e - refresh_e;
+var diff_min_e = Math.round(diff_e / 60000);
+document.getElementById('min_e').innerHTML= diff_min_e;
+</script>
+<p><a href="http://pit-prod-owagent3.snc1:8080/bh_mob_status_gdoop.html" target="_blank">Hourly BH/Mobile Status >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_g></p>
+<p style=display:inline> min back)
+<br>Hourly BH/Mobile Status- Load completed till <b>2018-07-16 00:59:59</b></p>
+<script>
+var refresh_g = new Date('2018-07-16T09:30:03Z');
+var now_g = new Date();
+var diff_g = now_g - refresh_g;
+var diff_min_g = Math.round(diff_g / 60000);
+document.getElementById('min_g').innerHTML= diff_min_g;
+</script>
+</div>
+
+<div id="ac">
+<h4 align="center">System Health</h4>
+<p><a href="http://pit-prod-owagent3.snc1:8080/space_usage.html" target="_blank">Space Usage >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_s></p>
+<p style=display:inline> min back)
+<br><b>Hadoop Cluster Usage-</b> PETL- 67%, Cerebro- 50%, Gdoop- 18%, Gdoop-Sox- 5%</p>
+<script>
+var refresh_s = new Date('2018-07-16T09:20:57Z');
+var now_s = new Date();
+var diff_s = now_s - refresh_s;
+var diff_min_s = Math.round(diff_s / 60000);
+document.getElementById('min_s').innerHTML= diff_min_s;
+</script>
+<p><b>TD batch password expiry</b> [next 15 days] :   b_lup_flattable- 6 days left,
+ b_billings- 6 days left,
+ b_lup_core- 6 days left</p>
+</div>
+
+<div id="ad">
+<h4 align="center">ETL Job Metrics</h4>
+<p><a href="http://pit-prod-owagent3.snc1:8080/long_running.html" target="_blank">Long Running Jobs >></a></p>
+<p style=display:inline>(Last refresh: </p>
+<p style=display:inline id=min_l></p>
+<p style=display:inline> min back)
+<br>Long Running Opswise Job Count- <b>4</b>
+<br>Long Running Hadoop Job Count- <b>12</b></p>
+<script>
+var refresh_l = new Date('2018-07-16T09:45:06Z');
+var now_l = new Date();
+var diff_l = now_l - refresh_l;
+var diff_min_l = Math.round(diff_l / 60000);
+document.getElementById('min_l').innerHTML= diff_min_l;
+</script>
+<p><a href="http://pit-prod-owagent3.snc1:8080/archive.html" target="_blank">Long Running Jobs History >></a></p>
+<p><a href="http://pit-prod-owagent3.snc1:8080/ops_stats.html" target="_blank">SNC Opswise Weekly Stats >></a></p>
+<p><a href="http://pit-prod-owagent3.snc1:8080/ops_stats_sac.html" target="_blank">SAC Opswise Weekly Stats >></a></p>
+</div>
+
+<div id="ae">
+<h4 align="center">Open Tickets</h4>
+<p><a href="https://groupon.pagerduty.com/services/PUT2G05" target="_blank">Open Pager Incidents >></a></p>
+<p><a href="https://goo.gl/15C5AZ" target="_blank">Open Jira Tickets >></a></p>
+</div>
+
+<div id="af">
+<h4 align="center">References</h4>
+<p><a href="https://wiki.groupondev.com/Megatron_Run_Book" target="_blank">Megatron Runbook >></a></p>
+<p><a href="https://goo.gl/hfwzGn" target="_blank">Janus Runbook >></a></p>
+<p><a href="https://goo.gl/KN8Qrn" target="_blank">EDW Runbook >></a></p>
+<p><a href="https://goo.gl/iV77zZ" target="_blank">Dev-Ops Reference>></a></p>
+<p><a href="https://goo.gl/KoL2u4" target="_blank">Oncall Roatation>></a></p>
+<p><a href="https://goo.gl/E4fLPx" target="_blank">Release Issues>></a></p>
+</div>
+
+
+
+</font>
+</body>
+</html>

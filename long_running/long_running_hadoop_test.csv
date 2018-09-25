@@ -1,0 +1,74 @@
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890003>job_201708251717_4890003</a>,source_extract/sqoop_extract-2,SNC1 Prod ETL,default,152
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890714>job_201708251717_4890714</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,54
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890720>job_201708251717_4890720</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,53
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890750>job_201708251717_4890750</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,49
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890772>job_201708251717_4890772</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,45
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890776>job_201708251717_4890776</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,45
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890777>job_201708251717_4890777</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,45
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890795>job_201708251717_4890795</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,39
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890798>job_201708251717_4890798</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,38
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890824>job_201708251717_4890824</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,34
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890828>job_201708251717_4890828</a>,8INlsZdvfO/sqoop_table-407e8cf,SNC1 Prod ETL,default,33
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890843>job_201708251717_4890843</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,33
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890860>job_201708251717_4890860</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,31
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890887>job_201708251717_4890887</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,27
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890909>job_201708251717_4890909</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,22
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890910>job_201708251717_4890910</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,22
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890924>job_201708251717_4890924</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,19
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890934>job_201708251717_4890934</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,18
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890944>job_201708251717_4890944</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,17
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890946>job_201708251717_4890946</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,16
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890948>job_201708251717_4890948</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,16
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890949>job_201708251717_4890949</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,15
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890950>job_201708251717_4890950</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,15
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890951>job_201708251717_4890951</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,16
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890967>job_201708251717_4890967</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,14
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890980>job_201708251717_4890980</a>,insert_subscriptions_tmp_[2]_2,SNC1 Prod ETL,p2,12
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890991>job_201708251717_4890991</a>,insert_billing_attributes_tmp_,SNC1 Prod ETL,default,9
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890993>job_201708251717_4890993</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,7
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890994>job_201708251717_4890994</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,8
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890995>job_201708251717_4890995</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,8
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890996>job_201708251717_4890996</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,9
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890998>job_201708251717_4890998</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,8
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4890999>job_201708251717_4890999</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,8
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891001>job_201708251717_4891001</a>,insert_dim_places_tmp_[2]_2018,SNC1 Prod ETL,default,8
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891003>job_201708251717_4891003</a>,MEGATRON_MERGE_voucher_txn_db_,SNC1 Prod ETL,default,7
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891012>job_201708251717_4891012</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,5
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891016>job_201708251717_4891016</a>,insert_sf_case_tmp_[2]_2018071,SNC1 Prod ETL,default,3
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891017>job_201708251717_4891017</a>,di_kafka_mr_consumer,SNC1 Prod ETL,kafkaconsumer,4
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891020>job_201708251717_4891020</a>,tracky_json_event/pull_data-c6,SNC1 Prod ETL,p4,3
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891021>job_201708251717_4891021</a>,tracky_json_event/pull_data-35,SNC1 Prod ETL,p4,4
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891022>job_201708251717_4891022</a>,tracky_json_event/pull_data-59,SNC1 Prod ETL,p4,4
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891024>job_201708251717_4891024</a>,tracky_json_event/pull_data-ea,SNC1 Prod ETL,p4,3
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891025>job_201708251717_4891025</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,4
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891027>job_201708251717_4891027</a>,MEGATRON_MERGE_groupon_product,SNC1 Prod ETL,p5,4
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891030>job_201708251717_4891030</a>,tracky_json_event/pull_data-e8,SNC1 Prod ETL,p4,4
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891046>job_201708251717_4891046</a>,rocketman_send_pull,SNC1 Prod ETL,default,2
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891052>job_201708251717_4891052</a>,insert_deal_merch_product_tmp_,SNC1 Prod ETL,default,2
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891053>job_201708251717_4891053</a>,tdmerge/get_rows_to_process-72,SNC1 Prod ETL,default,1
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891054>job_201708251717_4891054</a>,cs_agg_zendesk_utc_us/assertio,SNC1 Prod ETL,default,1
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891055>job_201708251717_4891055</a>,MEGATRON_MERGE_stores_producti,SNC1 Prod ETL,p5,1
+<a href=${NAMENODE_PETL}/jobdetails.jsp?jobid=job_201708251717_4891056>job_201708251717_4891056</a>,MEGATRON_MERGE_stores_producti,SNC1 Prod ETL,p5,1
+<a href=${NAMENODE_GDOOP}/cluster/app/application_1530661673092_136280>application_1530661673092_136280</a>,parse_bh_impression,Gdoop,edw_traffic_noncore,353
+<a href=${NAMENODE_GDOOP}/cluster/app/application_1530661673092_139147>application_1530661673092_139147</a>,HIVE-4cfe2524-4689-4f16-8f07-a,Gdoop,public,0
+<a href=${NAMENODE_GDOOP}/cluster/app/application_1530661673092_139148>application_1530661673092_139148</a>,select CONCAT(max(cast(id as i,Gdoop, '...1(Stage-1),25528894
+<a href=${NAMENODE_GDOOP}/cluster/app/application_1530661673092_139141>application_1530661673092_139141</a>,HIVE-b98ae22f-736a-437e-bfc4-b,Gdoop,public,1
+<a href=${NAMENODE_GDOOP}/cluster/app/application_1530661673092_139142>application_1530661673092_139142</a>,HIVE-cd96711b-6b38-4083-be99-8,Gdoop,public,1
+<a href=${NAMENODE_GDOOP}/cluster/app/application_1530661673092_139102>application_1530661673092_139102</a>,distcp,Gdoop,edw_traffic_core,4
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134774>application_1530656550018_134774</a>,distcp,Cerebro,edw_core,18
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134800>application_1530656550018_134800</a>,dw.mv_fact_zendesk_cases,Cerebro,replicator,14
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134801>application_1530656550018_134801</a>,prod_groupondw.fact_zendesk_ca,Cerebro,replicator,14
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134813>application_1530656550018_134813</a>,groupon_production.order_disco,Cerebro,replicator,12
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134811>application_1530656550018_134811</a>,zendesk.zendesk_editorial,Cerebro,replicator,13
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134810>application_1530656550018_134810</a>,zendesk.zendesk_merchant,Cerebro,replicator,13
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134823>application_1530656550018_134823</a>,groupon_production.order_shipp,Cerebro,replicator,9
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134821>application_1530656550018_134821</a>,prod_groupondw.mobile_push_not,Cerebro,replicator,10
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134828>application_1530656550018_134828</a>,distcp,Cerebro,edw_core,8
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134730>application_1530656550018_134730</a>,prod_groupondw.dim_user_histor,Cerebro,replicator,27
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134749>application_1530656550018_134749</a>,zendesk.zendesk_cases,Cerebro,replicator,24
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134753>application_1530656550018_134753</a>,prod_groupondw.dim_user,Cerebro,replicator,23
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134856>application_1530656550018_134856</a>,HIVE-87cda496-5eb9-4a8f-8181-4,Cerebro,edw_core,2
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134871>application_1530656550018_134871</a>,HIVE-8b53b9b3-125b-4c8a-89cd-9,Cerebro,public,0
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134866>application_1530656550018_134866</a>,distcp,Cerebro,edw_core,1
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134874>application_1530656550018_134874</a>,HIVE-c9a1d1c9-b1fa-4d15-8144-a,Cerebro,public,0
+<a href=${NAMENODE_CEREBRO}/cluster/app/application_1530656550018_134132>application_1530656550018_134132</a>,distcp,Cerebro,edw_core,127
